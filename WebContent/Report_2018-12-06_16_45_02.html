@@ -1,0 +1,4604 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>自动化测试报告</title>
+    <meta name="generator" content="HTMLTestRunner 0.8.2"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    
+<style type="text/css" media="screen">
+body        { font-family: verdana, arial, helvetica, sans-serif; font-size: 80%; }
+table       { font-size: 100%; }
+pre         { white-space: pre-wrap; white-space: -moz-pre-wrap; white-space: -pre-wrap; white-space: -o-pre-wrap; word-wrap:break-word }
+
+/* -- heading ---------------------------------------------------------------------- */
+h1 {
+    font-size: 16pt;
+    color: gray;
+}
+.heading {
+    margin-top: 0ex;
+    margin-bottom: 1ex;
+}
+
+.heading .attribute {
+    margin-top: 1ex;
+    margin-bottom: 0;
+}
+
+.heading .description {
+    margin-top: 4ex;
+    margin-bottom: 6ex;
+}
+
+/* -- css div popup ------------------------------------------------------------------------ */
+a.popup_link {
+}
+
+a.popup_link:hover {
+    color: red;
+}
+
+.popup_window {
+    display: none;
+    position: relative;
+    left: 0px;
+    top: 0px;
+    /*border: solid #627173 1px; */
+    padding: 10px;
+    background-color: #E6E6D6;
+    font-family: "Lucida Console", "Courier New", Courier, monospace;
+    text-align: left;
+    font-size: 8pt;
+    width:400px;
+}
+.popup_window_img {
+    display: none;
+    position: relative;
+    left: 0px;
+    top: 0px;
+    /*border: solid #627173 1px; */
+    padding: 10px;
+    font-family: "Lucida Console", "Courier New", Courier, monospace;
+    text-align: left;
+    font-size: 8pt;
+    width:95%;
+}
+
+}
+/* -- report ------------------------------------------------------------------------ */
+#show_detail_line {
+    margin-top: 3ex;
+    margin-bottom: 1ex;
+}
+#result_table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #777;
+}
+#header_row {
+    font-weight: bold;
+    color: white;
+    background-color: #777;
+}
+#result_table td {
+    border: 1px solid #777;
+    padding: 2px;
+}
+#total_row  { font-weight: bold; }
+.passClass  { background-color: #6c6; }
+.failClass  { background-color: #c60; }
+.errorClass { background-color: #c00; }
+.passCase   { color: #6c6; }
+.failCase   { color: #c60; font-weight: bold; }
+.errorCase  { color: #c00; font-weight: bold; }
+.hiddenRow  { display: none; }
+.testcase   { margin-left: 2em; }
+
+
+/* -- ending ---------------------------------------------------------------------- */
+#ending {
+}
+
+</style>
+
+</head>
+<body>
+<script language="javascript" type="text/javascript"><!--
+output_list = Array();
+
+/* level - 0:Summary; 1:Failed; 2:All */
+function showCase(level) {
+    trs = document.getElementsByTagName("tr");
+    for (var i = 0; i < trs.length; i++) {
+        tr = trs[i];
+        id = tr.id;
+        if (id.substr(0,2) == 'ft') {
+            if (level < 1) {
+                tr.className = 'hiddenRow';
+            }
+            else {
+                tr.className = '';
+            }
+        }
+        if (id.substr(0,2) == 'pt') {
+            if (level > 1) {
+                tr.className = '';
+            }
+            else {
+                tr.className = 'hiddenRow';
+            }
+        }
+    }
+}
+
+
+function showClassDetail(cid, count) {
+    var id_list = Array(count);
+    var toHide = 1;
+    for (var i = 0; i < count; i++) {
+        tid0 = 't' + cid.substr(1) + '.' + (i+1);
+        tid = 'f' + tid0;
+        tr = document.getElementById(tid);
+        if (!tr) {
+            tid = 'p' + tid0;
+            tr = document.getElementById(tid);
+        }
+        id_list[i] = tid;
+        if (tr.className) {
+            toHide = 0;
+        }
+    }
+    for (var i = 0; i < count; i++) {
+        tid = id_list[i];
+        if (toHide) {
+            document.getElementById('div_'+tid).style.display = 'none'
+            document.getElementById(tid).className = 'hiddenRow';
+        }
+        else {
+            document.getElementById(tid).className = '';
+        }
+    }
+}
+
+
+function showTestDetail(div_id){
+    var details_div = document.getElementById(div_id)
+    var displayState = details_div.style.display
+    // alert(displayState)
+    if (displayState != 'block' ) {
+        displayState = 'block'
+        details_div.style.display = 'block'
+    }
+    else {
+        details_div.style.display = 'none'
+    }
+}
+function showHTML(id){
+    var state = document.getElementById(id).style.display
+    if (state == 'none' ) {
+        document.getElementById(id).style.display = 'block'
+        }
+    else {
+        document.getElementById(id).style.display = 'none';
+        }
+    }
+
+
+function html_escape(s) {
+    s = s.replace(/&/g,'&amp;');
+    s = s.replace(/</g,'&lt;');
+    s = s.replace(/>/g,'&gt;');
+    return s;
+}
+
+/* obsoleted by detail in <div>
+function showOutput(id, name) {
+    var w = window.open("", //url
+                    name,
+                    "resizable,scrollbars,status,width=800,height=450");
+    d = w.document;
+    d.write("<pre>");
+    d.write(html_escape(output_list[id]));
+    d.write("\n");
+    d.write("<a href='javascript:window.close()'>close</a>\n");
+    d.write("</pre>\n");
+    d.close();
+}
+*/
+--></script>
+
+<div class='heading'>
+<h1>自动化测试报告</h1>
+<p class='attribute'><strong>开始时间:</strong> 2018-12-06 16:45:04</p>
+<p class='attribute'><strong>合计耗时:</strong> 1:49:43.783571</p>
+<p class='attribute'><strong>测试结果:</strong> 共 85, 通过 12, 失败 15, 错误 58， 通过率= 14.12%</p>
+
+<p class='description'>报告时间:2018-12-06 16:45:02</p>
+</div>
+
+
+<span style="color:#0000FF; background-color:#4682B4; border-radius:5px; width: 150px">
+概要：{ 14.117647058823529% }
+</span>
+<span style="color:#FFFFFF; background-color: white; width: 5px">
+1
+</span>
+<span style="color:#FFFFFF; background-color: red; border-radius:5px; width: 100px">
+失败：{ 15 }
+</span>
+<span style="color:#FFFFFF; background-color: white; width: 5px">
+1
+</span>
+<span style="color:#FFFFFF; background-color: green; border-radius:5px; width: 100px">
+通过{ 12 }
+</span>:
+<span style="color:#FFFFFF; background-color: white; width: 5px">
+1
+</span>
+<span style="color:#FFFFFF; background-color:#00CED1; border-radius:5px; width: 100px">
+所有{ 85 }
+</span>
+<p id='show_detail_line'>展示
+<a href='javascript:showCase(0)'>概要</a>
+<a href='javascript:showCase(1)'>失败</a>
+<a href='javascript:showCase(2)'>所有</a>
+</p>
+<table id='result_table'>
+<colgroup>
+<col align='left' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+</colgroup>
+<tr id='header_row'>
+    <td>用例集/测试用例</td>
+    <td>总计</td>
+    <td>通过</td>
+    <td>失败</td>
+    <td>错误</td>
+    <td>视图</td>
+    <td>测试结果图片展示</td>
+</tr>
+
+<tr class='passClass'>
+    <td>Module.ECSSPortal_Login.Login.Login</td>
+    <td>1</td>
+    <td>1</td>
+    <td>0</td>
+    <td>0</td>
+    <td><a href="javascript:showClassDetail('c1',1)">详细</a></td>
+    <td>&nbsp;</td>
+</tr>
+
+<tr id='pt1.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_001_login_ecportal</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.1')" >
+        通过</a>
+    <div id='div_pt1.1' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_pt1.1').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.全网运营商登录ecportal
+2.检查是否登录成功
+CHECKPOINT[PASS]：登录成功
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_pt1.1')">展示图片</a>
+    <div id='div_capture_pt1.1' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr class='errorClass'>
+    <td>Module.ECSSPortal_Dashboard.Dashboard.Dashboard</td>
+    <td>5</td>
+    <td>0</td>
+    <td>0</td>
+    <td>5</td>
+    <td><a href="javascript:showClassDetail('c2',5)">详细</a></td>
+    <td>&nbsp;</td>
+</tr>
+
+<tr id='ft2.1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_111_SIM_BILLInfo</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft2.1')" >
+        错误</a>
+    <div id='div_ft2.1' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft2.1').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.登录ECPortal
+http://192.168.156.217:6688/sso-login/security/login
+2.查看SIM卡基本信息-计费状态
+&lt;View.ECSS_Dashboard_Page.SIMInfoPage.SIMInfoPage object at 0x00000000135D79E8&gt; 页面中未能找到 ('xpath', ".//*[@id='content']/div/div[1]/div/div[1]/div[2]/div[1]/ul/li[2]/span") 元素
+&lt;View.ECSS_Dashboard_Page.SIMInfoPage.SIMInfoPage object at 0x00000000135D79E8&gt; page does not have "('xpath', ".//*[@id='content']/div/div[1]/div/div[1]/div[2]/div[1]/ul/li[2]/span")" locator
+None
+[WinError 3] 系统找不到指定的路径。: 'C:\\Users\\admin\\AppData\\Local\\Temp\\tmp4k_n6c1e\\webdriver-py-profilecopy'
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_Dashboard\Dashboard.py", line 51, in test_111_SIM_BILLInfo
+    flag = check_bill_status(driver)
+  File "E:\Script\UI\Commons\ECSS_Dashboard\Res_SIMListInfo.py", line 195, in check_bill_status
+    if int(total_num) &gt; 0:
+TypeError: int() argument must be a string, a bytes-like object or a number, not 'NoneType'
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft2.1')">展示图片</a>
+    <div id='div_capture_ft2.1' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='ft2.2' class='none'>
+    <td class='errorCase'><div class='testcase'>test_112_SIM_ACCOUNTInfo</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft2.2')" >
+        错误</a>
+    <div id='div_ft2.2' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft2.2').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.登录ECPortal
+http://192.168.156.217:6688/sso-login/security/login
+2.查看SIM卡基本信息-SIM卡账户状态
+&lt;View.ECSS_Dashboard_Page.SIMInfoPage.SIMInfoPage object at 0x00000000135D7F98&gt; 页面中未能找到 ('xpath', ".//*[text()='信息面板']") 元素
+[WinError 3] 系统找不到指定的路径。: 'C:\\Users\\admin\\AppData\\Local\\Temp\\tmpwz6r6nuf\\webdriver-py-profilecopy'
+Traceback (most recent call last):
+  File "E:\Script\UI\Libraries\Page.py", line 135, in oper_click
+    self.find_element(*loc).click()
+AttributeError: 'NoneType' object has no attribute 'click'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_Dashboard\Dashboard.py", line 60, in test_112_SIM_ACCOUNTInfo
+    flag = check_account_status(driver)
+  File "E:\Script\UI\Commons\ECSS_Dashboard\Res_SIMListInfo.py", line 31, in check_account_status
+    sim_page.click_dashboard_menu()
+  File "E:\Script\UI\View\ECSS_Dashboard_Page\SIMInfoPage.py", line 94, in click_dashboard_menu
+    self.oper_click(self.dashboard_menu_loc)
+  File "E:\Script\UI\Libraries\Page.py", line 137, in oper_click
+    raise ValueError("控件不可用或者定位失败")
+ValueError: 控件不可用或者定位失败
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft2.2')">展示图片</a>
+    <div id='div_capture_ft2.2' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='ft2.3' class='none'>
+    <td class='errorCase'><div class='testcase'>test_113_SIM_GPRSInfo</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft2.3')" >
+        错误</a>
+    <div id='div_ft2.3' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft2.3').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.登录ECPortal
+http://192.168.156.217:6688/sso-login/security/login
+2.查看SIM卡基本信息-SIM卡通信状态
+&lt;View.ECSS_Dashboard_Page.SIMInfoPage.SIMInfoPage object at 0x00000000135D7438&gt; 页面中未能找到 ('xpath', ".//*[text()='信息面板']") 元素
+[WinError 3] 系统找不到指定的路径。: 'C:\\Users\\admin\\AppData\\Local\\Temp\\tmpdd44p2kt\\webdriver-py-profilecopy'
+Traceback (most recent call last):
+  File "E:\Script\UI\Libraries\Page.py", line 135, in oper_click
+    self.find_element(*loc).click()
+AttributeError: 'NoneType' object has no attribute 'click'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_Dashboard\Dashboard.py", line 69, in test_113_SIM_GPRSInfo
+    flag = check_gprs_status(driver)
+  File "E:\Script\UI\Commons\ECSS_Dashboard\Res_SIMListInfo.py", line 391, in check_gprs_status
+    sim_page.click_dashboard_menu()
+  File "E:\Script\UI\View\ECSS_Dashboard_Page\SIMInfoPage.py", line 94, in click_dashboard_menu
+    self.oper_click(self.dashboard_menu_loc)
+  File "E:\Script\UI\Libraries\Page.py", line 137, in oper_click
+    raise ValueError("控件不可用或者定位失败")
+ValueError: 控件不可用或者定位失败
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft2.3')">展示图片</a>
+    <div id='div_capture_ft2.3' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='ft2.4' class='none'>
+    <td class='errorCase'><div class='testcase'>test_114_SIM_BaseInfo_display</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft2.4')" >
+        错误</a>
+    <div id='div_ft2.4' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft2.4').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.登录ECPortal
+http://192.168.156.217:6688/sso-login/security/login
+2.查看SIM卡基本信息-计费状态
+[WinError 3] 系统找不到指定的路径。: 'C:\\Users\\admin\\AppData\\Local\\Temp\\tmp0k4km1mb\\webdriver-py-profilecopy'
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_Dashboard\Dashboard.py", line 78, in test_114_SIM_BaseInfo_display
+    sim_info = get_dashboard_sim_info(driver, "BILL")
+  File "E:\Script\UI\Commons\ECSS_Dashboard\Res_Dashboard.py", line 119, in get_dashboard_sim_info
+    items_bill = driver.find_elements_by_class_name("num")
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 571, in find_elements_by_class_name
+    return self.find_elements(by=By.CLASS_NAME, value=name)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 983, in find_elements
+    'value': value})['value'] or []
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 310, in execute
+    response = self.command_executor.execute(driver_command, params)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\remote_connection.py", line 466, in execute
+    return self._request(command_info[0], url, body=data)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\remote_connection.py", line 489, in _request
+    self._conn.request(method, parsed_url.path, body, headers)
+  File "C:\Python36\lib\http\client.py", line 1239, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "C:\Python36\lib\http\client.py", line 1285, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "C:\Python36\lib\http\client.py", line 1234, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "C:\Python36\lib\http\client.py", line 1026, in _send_output
+    self.send(msg)
+  File "C:\Python36\lib\http\client.py", line 964, in send
+    self.connect()
+  File "C:\Python36\lib\http\client.py", line 936, in connect
+    (self.host,self.port), self.timeout, self.source_address)
+  File "C:\Python36\lib\socket.py", line 724, in create_connection
+    raise err
+  File "C:\Python36\lib\socket.py", line 713, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [WinError 10061] 由于目标计算机积极拒绝，无法连接。
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft2.4')">展示图片</a>
+    <div id='div_capture_ft2.4' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='ft2.5' class='none'>
+    <td class='errorCase'><div class='testcase'>test_115_Set_Alarm_link</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft2.5')" >
+        错误</a>
+    <div id='div_ft2.5' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft2.5').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.登录ECPortal
+http://192.168.156.217:6688/sso-login/security/login
+2.点击设置告警链接
+&lt;View.ECSS_Dashboard_Page.AlarmPage.AlarmPage object at 0x0000000016813828&gt; 页面中未能找到 ('xpath', ".//*[@id='content']/div/div[2]/div/div/div[1]/div[1]/a") 元素
+[WinError 3] 系统找不到指定的路径。: 'C:\\Users\\admin\\AppData\\Local\\Temp\\tmpzse7jdua\\webdriver-py-profilecopy'
+Traceback (most recent call last):
+  File "E:\Script\UI\Libraries\Page.py", line 135, in oper_click
+    self.find_element(*loc).click()
+AttributeError: 'NoneType' object has no attribute 'click'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_Dashboard\Dashboard.py", line 141, in test_115_Set_Alarm_link
+    flag = click_Set_Alarm_link(driver)
+  File "E:\Script\UI\Commons\ECSS_Dashboard\Res_Dashboard.py", line 161, in click_Set_Alarm_link
+    alarm_page.click_alarm_button_first()
+  File "E:\Script\UI\View\ECSS_Dashboard_Page\AlarmPage.py", line 48, in click_alarm_button_first
+    self.oper_click(self.alarm_button_first_loc)
+  File "E:\Script\UI\Libraries\Page.py", line 137, in oper_click
+    raise ValueError("控件不可用或者定位失败")
+ValueError: 控件不可用或者定位失败
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft2.5')">展示图片</a>
+    <div id='div_capture_ft2.5' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr class='failClass'>
+    <td>Module.ECSSPortal_Dashboard.AlarmInfo.Dashboard</td>
+    <td>1</td>
+    <td>0</td>
+    <td>1</td>
+    <td>0</td>
+    <td><a href="javascript:showClassDetail('c3',1)">详细</a></td>
+    <td>&nbsp;</td>
+</tr>
+
+<tr id='ft3.1' class='none'>
+    <td class='failCase'><div class='testcase'>test_121_alarm_info: 业管-信息面板-本月通信服务累计使用预警情况</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft3.1')" >
+        失败</a>
+    <div id='div_ft3.1' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft3.1').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.全网运营商登录portal
+2.查看本月通信服务累计使用预警情况
+0
+0
+192.168.156.207:1521/iot
+192.168.156.207:1521/iot
+CHECKPOINT[PASS]：数据服务预警卡数
+192.168.156.207:1521/iot
+192.168.156.207:1521/iot
+CHECKPOINT[Failure]:数据服务预警规则总卡数
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_Dashboard\AlarmInfo.py", line 38, in test_121_alarm_info
+    checkResult(self, driver, get_alarm_total_num_gprs(), int(alarmist[1]), "数据服务预警规则总卡数")
+  File "E:\Script\UI\Libraries\UtilityFunctions.py", line 155, in checkResult
+    self.fail(message)
+AssertionError: 数据服务预警规则总卡数
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft3.1')">展示图片</a>
+    <div id='div_capture_ft3.1' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr class='errorClass'>
+    <td>Module.ECSSPortal_Dashboard.GPRSView.Dashboard</td>
+    <td>2</td>
+    <td>0</td>
+    <td>0</td>
+    <td>2</td>
+    <td><a href="javascript:showClassDetail('c4',2)">详细</a></td>
+    <td>&nbsp;</td>
+</tr>
+
+<tr id='ft4.1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_131_GPRS_Info_view_most: 业管-信息面板-GPRS流量信息查看-昨日流量最多</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft4.1')" >
+        错误</a>
+    <div id='div_ft4.1' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft4.1').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.全网运营商登录sso
+2.GPRS流量信息查看-昨日流量最多
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_Dashboard\GPRSView.py", line 29, in test_131_GPRS_Info_view_most
+    list_gprs_most = get_gprs_most(driver)
+  File "E:\Script\UI\Commons\ECSS_Dashboard\Res_GPRS_View.py", line 38, in get_gprs_most
+    ".//*[@id='content']/div/div[3]/div/div[2]/div[3]/div[" + str(i) + "]/div[2]/span").text)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 385, in find_element_by_xpath
+    return self.find_element(by=By.XPATH, value=xpath)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 955, in find_element
+    'value': value})['value']
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 312, in execute
+    self.error_handler.check_response(response)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 242, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchElementException: Message: Unable to locate element: .//*[@id='content']/div/div[3]/div/div[2]/div[3]/div[1]/div[2]/span
+
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft4.1')">展示图片</a>
+    <div id='div_capture_ft4.1' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='ft4.2' class='none'>
+    <td class='errorCase'><div class='testcase'>test_132_GPRS_Info_view_least: 业管-信息面板-GPRS流量信息查看-昨日流量最少</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft4.2')" >
+        错误</a>
+    <div id='div_ft4.2' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft4.2').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.全网运营商登录sso
+2.GPRS流量信息查看-昨日流量最少
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_Dashboard\GPRSView.py", line 37, in test_132_GPRS_Info_view_least
+    list_gprs_least = get_gprs_least(driver)
+  File "E:\Script\UI\Commons\ECSS_Dashboard\Res_GPRS_View.py", line 64, in get_gprs_least
+    ".//*[@id='content']/div/div[3]/div/div[3]/div[3]/div[" + str(i) + "]/div[2]/span").text)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 385, in find_element_by_xpath
+    return self.find_element(by=By.XPATH, value=xpath)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 955, in find_element
+    'value': value})['value']
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 312, in execute
+    self.error_handler.check_response(response)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 242, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchElementException: Message: Unable to locate element: .//*[@id='content']/div/div[3]/div/div[3]/div[3]/div[1]/div[2]/span
+
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft4.2')">展示图片</a>
+    <div id='div_capture_ft4.2' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr class='errorClass'>
+    <td>Module.ECSSPortal_Dashboard.MsgView.Dashboard</td>
+    <td>2</td>
+    <td>0</td>
+    <td>0</td>
+    <td>2</td>
+    <td><a href="javascript:showClassDetail('c5',2)">详细</a></td>
+    <td>&nbsp;</td>
+</tr>
+
+<tr id='ft5.1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_141_msg_info_view_most: 业管-信息面板-短信流量信息查看-昨日短信最多</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft5.1')" >
+        错误</a>
+    <div id='div_ft5.1' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft5.1').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.全网运营商登录ECportal
+2.短信流量信息查看-昨日短信最多
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_Dashboard\MsgView.py", line 26, in test_141_msg_info_view_most
+    list_sms_most = get_sms_most(driver)
+  File "E:\Script\UI\Commons\ECSS_Dashboard\Res_Msg_View.py", line 25, in get_sms_most
+    ".//*[@id='content']/div/div[4]/div/div[2]/div[3]/div[" + str(i) + "]/div[2]/span").text)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 385, in find_element_by_xpath
+    return self.find_element(by=By.XPATH, value=xpath)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 955, in find_element
+    'value': value})['value']
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 312, in execute
+    self.error_handler.check_response(response)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 242, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchElementException: Message: Unable to locate element: .//*[@id='content']/div/div[4]/div/div[2]/div[3]/div[1]/div[2]/span
+
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft5.1')">展示图片</a>
+    <div id='div_capture_ft5.1' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='ft5.2' class='none'>
+    <td class='errorCase'><div class='testcase'>test_142_msg_info_view_least: 业管-信息面板-短信流量信息查看-昨日短信最少</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft5.2')" >
+        错误</a>
+    <div id='div_ft5.2' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft5.2').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.全网运营商登录ECportal
+2.短信流量信息查看-昨日短信最少
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_Dashboard\MsgView.py", line 34, in test_142_msg_info_view_least
+    list_sms_least = get_sms_least(driver)
+  File "E:\Script\UI\Commons\ECSS_Dashboard\Res_Msg_View.py", line 38, in get_sms_least
+    ".//*[@id='content']/div/div[4]/div/div[3]/div[3]/div[" + str(i) + "]/div[2]/span").text)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 385, in find_element_by_xpath
+    return self.find_element(by=By.XPATH, value=xpath)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 955, in find_element
+    'value': value})['value']
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 312, in execute
+    self.error_handler.check_response(response)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 242, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchElementException: Message: Unable to locate element: .//*[@id='content']/div/div[4]/div/div[3]/div[3]/div[1]/div[2]/span
+
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft5.2')">展示图片</a>
+    <div id='div_capture_ft5.2' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr class='passClass'>
+    <td>Module.ECSSPortal_Dashboard.Dashboard_GroupUser.Dashboard</td>
+    <td>5</td>
+    <td>5</td>
+    <td>0</td>
+    <td>0</td>
+    <td><a href="javascript:showClassDetail('c6',5)">详细</a></td>
+    <td>&nbsp;</td>
+</tr>
+
+<tr id='pt6.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_111_SIM_BILLInfo_group: 业管-信息面板-计费状态(群组)</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt6.1')" >
+        通过</a>
+    <div id='div_pt6.1' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_pt6.1').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.全网运营商登录portal
+ecqz_851szh
+ecqz_851szh
+1.查看SIM卡基本信息-计费状态
+0
+0
+0
+0
+CHECKPOINT[PASS]：卡账户状态检查成功
+2.检查数量大于0每个link里面的数据
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_pt6.1')">展示图片</a>
+    <div id='div_capture_pt6.1' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='pt6.2' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_112_SIM_ACCOUNTInfo_group: 业管-信息面板-卡账户状态(群组)</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt6.2')" >
+        通过</a>
+    <div id='div_pt6.2' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_pt6.2').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.全网运营商登录portal
+ecqz_851szh
+ecqz_851szh
+3.查看SIM卡基本信息-SIM卡账户状态
+0
+0
+0
+CHECKPOINT[PASS]：卡账户状态检查成功
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_pt6.2')">展示图片</a>
+    <div id='div_capture_pt6.2' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='pt6.3' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_113_SIM_GPRSInfo_group: 业管-信息面板-卡通信状态(群组)</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt6.3')" >
+        通过</a>
+    <div id='div_pt6.3' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_pt6.3').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.全网运营商登录portal
+ecqz_851szh
+ecqz_851szh
+4.查看SIM卡基本信息-SIM卡通信状态
+0
+0
+CHECKPOINT[PASS]：卡账户状态检查成功
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_pt6.3')">展示图片</a>
+    <div id='div_capture_pt6.3' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='pt6.4' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_114_SIM_BaseInfo_display_group: 业管-信息面板-界面信息(群组)</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt6.4')" >
+        通过</a>
+    <div id='div_pt6.4' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_pt6.4').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.全网运营商登录portal
+ecqz_851szh
+ecqz_851szh
+1.查看SIM卡基本信息-计费状态
+2.查看SIM卡基本信息-SIM卡账户状态
+3.查看SIM卡基本信息-SIM卡通信状态
+CHECKPOINT[PASS]：查看SIM卡基本信息成功
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_pt6.4')">展示图片</a>
+    <div id='div_capture_pt6.4' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='pt6.5' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_115_Set_Alarm_link_group: 业管-信息面板-告警跳转(群组)</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt6.5')" >
+        通过</a>
+    <div id='div_pt6.5' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_pt6.5').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.全网运营商登录portal
+ecqz_851szh
+ecqz_851szh
+2.点击设置告警链接
+flag_text:自动化规则
+返回
+3.检查设置告警链接是否有效跳转
+CHECKPOINT[PASS]：设置告警链接能否有效跳转
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_pt6.5')">展示图片</a>
+    <div id='div_capture_pt6.5' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr class='passClass'>
+    <td>Module.ECSSPortal_Dashboard.AlarmInfo_GroupUser.Dashboard</td>
+    <td>1</td>
+    <td>1</td>
+    <td>0</td>
+    <td>0</td>
+    <td><a href="javascript:showClassDetail('c7',1)">详细</a></td>
+    <td>&nbsp;</td>
+</tr>
+
+<tr id='pt7.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_121_alarm_info_group</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt7.1')" >
+        通过</a>
+    <div id='div_pt7.1' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_pt7.1').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.全网运营商登录portal
+2.查看本月通信服务累计使用预警情况
+0
+0
+192.168.156.207:1521/iot
+192.168.156.207:1521/iot
+CHECKPOINT[PASS]：GPRS预警卡数
+192.168.156.207:1521/iot
+192.168.156.207:1521/iot
+CHECKPOINT[PASS]：GPRS预警规则总卡数
+3.查看业务告警信息-短信使用预警情况
+0
+0
+192.168.156.207:1521/iot
+192.168.156.207:1521/iot
+CHECKPOINT[PASS]：本月短信累计使用预警卡数
+192.168.156.207:1521/iot
+192.168.156.207:1521/iot
+CHECKPOINT[PASS]：本月短信累计使用预警规则总卡数
+4.查看业务告警信息-状态变更预警情况
+0
+0
+192.168.156.207:1521/iot
+192.168.156.207:1521/iot
+CHECKPOINT[PASS]：状态变更预警卡数
+192.168.156.207:1521/iot
+192.168.156.207:1521/iot
+CHECKPOINT[PASS]：状态变更预警规则总卡数
+5.点击设置告警链接
+flag_text:自动化规则
+返回
+6.检查设置告警链接是否有效跳转
+CHECKPOINT[PASS]：设置告警链接能否有效跳转
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_pt7.1')">展示图片</a>
+    <div id='div_capture_pt7.1' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr class='errorClass'>
+    <td>Module.ECSSPortal_Dashboard.GPRSView_GroupUser.Dashboard</td>
+    <td>2</td>
+    <td>0</td>
+    <td>0</td>
+    <td>2</td>
+    <td><a href="javascript:showClassDetail('c8',2)">详细</a></td>
+    <td>&nbsp;</td>
+</tr>
+
+<tr id='ft8.1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_131_GPRS_Info_view_most_group: 业管-信息面板-GPRS流量信息查看-昨日流量最多(群组)</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft8.1')" >
+        错误</a>
+    <div id='div_ft8.1' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft8.1').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.全网运营商登录ECportal
+2.GPRS流量信息查看-昨日流量最多
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_Dashboard\GPRSView_GroupUser.py", line 28, in test_131_GPRS_Info_view_most_group
+    list_gprs_most = get_gprs_most(driver)
+  File "E:\Script\UI\Commons\ECSS_Dashboard\Res_GPRS_View.py", line 38, in get_gprs_most
+    ".//*[@id='content']/div/div[3]/div/div[2]/div[3]/div[" + str(i) + "]/div[2]/span").text)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 385, in find_element_by_xpath
+    return self.find_element(by=By.XPATH, value=xpath)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 955, in find_element
+    'value': value})['value']
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 312, in execute
+    self.error_handler.check_response(response)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 242, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchElementException: Message: Unable to locate element: .//*[@id='content']/div/div[3]/div/div[2]/div[3]/div[1]/div[2]/span
+
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft8.1')">展示图片</a>
+    <div id='div_capture_ft8.1' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='ft8.2' class='none'>
+    <td class='errorCase'><div class='testcase'>test_132_GPRS_Info_view_least_group: 业管-信息面板-GPRS流量信息查看-昨日流量最少(群组)</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft8.2')" >
+        错误</a>
+    <div id='div_ft8.2' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft8.2').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.全网运营商登录ECportal
+2.GPRS流量信息查看-昨日流量最少
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_Dashboard\GPRSView_GroupUser.py", line 36, in test_132_GPRS_Info_view_least_group
+    list_gprs_least = get_gprs_least(driver)
+  File "E:\Script\UI\Commons\ECSS_Dashboard\Res_GPRS_View.py", line 64, in get_gprs_least
+    ".//*[@id='content']/div/div[3]/div/div[3]/div[3]/div[" + str(i) + "]/div[2]/span").text)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 385, in find_element_by_xpath
+    return self.find_element(by=By.XPATH, value=xpath)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 955, in find_element
+    'value': value})['value']
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 312, in execute
+    self.error_handler.check_response(response)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 242, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchElementException: Message: Unable to locate element: .//*[@id='content']/div/div[3]/div/div[3]/div[3]/div[1]/div[2]/span
+
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft8.2')">展示图片</a>
+    <div id='div_capture_ft8.2' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr class='errorClass'>
+    <td>Module.ECSSPortal_Dashboard.MsgView_GroupUser.Dashboard</td>
+    <td>2</td>
+    <td>0</td>
+    <td>0</td>
+    <td>2</td>
+    <td><a href="javascript:showClassDetail('c9',2)">详细</a></td>
+    <td>&nbsp;</td>
+</tr>
+
+<tr id='ft9.1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_141_msg_info_view_most_group: 业管-信息面板-短信流量信息查看-昨日短信最多(群组)</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft9.1')" >
+        错误</a>
+    <div id='div_ft9.1' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft9.1').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.全网运营商登录ECportal
+2.短信流量信息查看-昨日短信最多
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_Dashboard\MsgView_GroupUser.py", line 28, in test_141_msg_info_view_most_group
+    list_sms_most = get_sms_most(driver)
+  File "E:\Script\UI\Commons\ECSS_Dashboard\Res_Msg_View.py", line 25, in get_sms_most
+    ".//*[@id='content']/div/div[4]/div/div[2]/div[3]/div[" + str(i) + "]/div[2]/span").text)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 385, in find_element_by_xpath
+    return self.find_element(by=By.XPATH, value=xpath)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 955, in find_element
+    'value': value})['value']
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 312, in execute
+    self.error_handler.check_response(response)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 242, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchElementException: Message: Unable to locate element: .//*[@id='content']/div/div[4]/div/div[2]/div[3]/div[1]/div[2]/span
+
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft9.1')">展示图片</a>
+    <div id='div_capture_ft9.1' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='ft9.2' class='none'>
+    <td class='errorCase'><div class='testcase'>test_142_msg_info_view_least_group: 业管-信息面板-短信流量信息查看-昨日短信最少(群组)</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft9.2')" >
+        错误</a>
+    <div id='div_ft9.2' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft9.2').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.全网运营商登录ECportal
+2.短信流量信息查看-昨日短信最少
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_Dashboard\MsgView_GroupUser.py", line 36, in test_142_msg_info_view_least_group
+    list_sms_least = get_sms_least(driver)
+  File "E:\Script\UI\Commons\ECSS_Dashboard\Res_Msg_View.py", line 38, in get_sms_least
+    ".//*[@id='content']/div/div[4]/div/div[3]/div[3]/div[" + str(i) + "]/div[2]/span").text)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 385, in find_element_by_xpath
+    return self.find_element(by=By.XPATH, value=xpath)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 955, in find_element
+    'value': value})['value']
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 312, in execute
+    self.error_handler.check_response(response)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 242, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchElementException: Message: Unable to locate element: .//*[@id='content']/div/div[4]/div/div[3]/div[3]/div[1]/div[2]/span
+
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft9.2')">展示图片</a>
+    <div id='div_capture_ft9.2' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr class='errorClass'>
+    <td>Module.ECSSPortal_CommunicationMgt.CommunicationMgt.Communication</td>
+    <td>8</td>
+    <td>0</td>
+    <td>0</td>
+    <td>8</td>
+    <td><a href="javascript:showClassDetail('c10',8)">详细</a></td>
+    <td>&nbsp;</td>
+</tr>
+
+<tr id='ft10.1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_211_search_communicatin_info: 连接管理平台-通信管理-物联卡信息管理-查询（查询和高级）</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft10.1')" >
+        错误</a>
+    <div id='div_ft10.1' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft10.1').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.登录连接管理平台
+2.按条件查询，检查结果
+192.168.156.207:1521/iot
+192.168.156.207:1521/iot
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_CommunicationMgt\CommunicationMgt.py", line 51, in test_211_search_communicatin_info
+    flag = Res_CommunicationMgt.check_communication_info(driver)
+  File "E:\Script\UI\Commons\ECSS_CommunicationMgt\Res_CommunicationMgt.py", line 374, in check_communication_info
+    info = search_communicatinMgt(driver)
+  File "E:\Script\UI\Commons\ECSS_CommunicationMgt\Res_CommunicationMgt.py", line 44, in search_communicatinMgt
+    simInfo = commun_page.get_first_row_elems_list()
+  File "E:\Script\UI\View\ECSS_CommunicationMgt_Page\CommunicationMgtPage.py", line 166, in get_first_row_elems_list
+    elems_value = self.get_textlist_from_page_u(elems_loc)
+  File "E:\Script\UI\Libraries\Page.py", line 183, in get_textlist_from_page_u
+    for i in range(0, len(elems)):
+TypeError: object of type 'NoneType' has no len()
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft10.1')">展示图片</a>
+    <div id='div_capture_ft10.1' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='ft10.2' class='none'>
+    <td class='errorCase'><div class='testcase'>test_214_jump_to_summarized_info_page: 连接管理平台-通信管理-物联卡信息管理-综合信息跳转</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft10.2')" >
+        错误</a>
+    <div id='div_ft10.2' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft10.2').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.登录连接管理平台
+2.进入通信管理&gt;物联卡信息管理
+192.168.156.207:1521/iot
+192.168.156.207:1521/iot
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_CommunicationMgt\CommunicationMgt.py", line 77, in test_214_jump_to_summarized_info_page
+    msisdnInfo = Res_CommunicationMgt.search_communicatinMgt(driver)
+  File "E:\Script\UI\Commons\ECSS_CommunicationMgt\Res_CommunicationMgt.py", line 44, in search_communicatinMgt
+    simInfo = commun_page.get_first_row_elems_list()
+  File "E:\Script\UI\View\ECSS_CommunicationMgt_Page\CommunicationMgtPage.py", line 166, in get_first_row_elems_list
+    elems_value = self.get_textlist_from_page_u(elems_loc)
+  File "E:\Script\UI\Libraries\Page.py", line 183, in get_textlist_from_page_u
+    for i in range(0, len(elems)):
+TypeError: object of type 'NoneType' has no len()
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft10.2')">展示图片</a>
+    <div id='div_capture_ft10.2' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='ft10.3' class='none'>
+    <td class='errorCase'><div class='testcase'>test_215_jump_to_intelligence_diagnoise_page: 连接管理平台-通信管理-物联卡信息管理-智能诊断跳转</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft10.3')" >
+        错误</a>
+    <div id='div_ft10.3' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft10.3').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.登录连接管理平台
+2.进入通信管理&gt;物联卡信息管理
+192.168.156.207:1521/iot
+192.168.156.207:1521/iot
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_CommunicationMgt\CommunicationMgt.py", line 86, in test_215_jump_to_intelligence_diagnoise_page
+    msisdnInfo = Res_CommunicationMgt.search_communicatinMgt(driver)
+  File "E:\Script\UI\Commons\ECSS_CommunicationMgt\Res_CommunicationMgt.py", line 44, in search_communicatinMgt
+    simInfo = commun_page.get_first_row_elems_list()
+  File "E:\Script\UI\View\ECSS_CommunicationMgt_Page\CommunicationMgtPage.py", line 166, in get_first_row_elems_list
+    elems_value = self.get_textlist_from_page_u(elems_loc)
+  File "E:\Script\UI\Libraries\Page.py", line 183, in get_textlist_from_page_u
+    for i in range(0, len(elems)):
+TypeError: object of type 'NoneType' has no len()
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft10.3')">展示图片</a>
+    <div id='div_capture_ft10.3' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='ft10.4' class='none'>
+    <td class='errorCase'><div class='testcase'>test_216_jump_to_detail_diagnoise_page: 连接管理平台-通信管理-物联卡信息管理-详细诊断跳转</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft10.4')" >
+        错误</a>
+    <div id='div_ft10.4' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft10.4').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.登录连接管理平台
+2.进入通信管理&gt;物联卡信息管理
+192.168.156.207:1521/iot
+192.168.156.207:1521/iot
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_CommunicationMgt\CommunicationMgt.py", line 95, in test_216_jump_to_detail_diagnoise_page
+    msisdnInfo = Res_CommunicationMgt.search_communicatinMgt(driver)
+  File "E:\Script\UI\Commons\ECSS_CommunicationMgt\Res_CommunicationMgt.py", line 44, in search_communicatinMgt
+    simInfo = commun_page.get_first_row_elems_list()
+  File "E:\Script\UI\View\ECSS_CommunicationMgt_Page\CommunicationMgtPage.py", line 166, in get_first_row_elems_list
+    elems_value = self.get_textlist_from_page_u(elems_loc)
+  File "E:\Script\UI\Libraries\Page.py", line 183, in get_textlist_from_page_u
+    for i in range(0, len(elems)):
+TypeError: object of type 'NoneType' has no len()
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft10.4')">展示图片</a>
+    <div id='div_capture_ft10.4' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='ft10.5' class='none'>
+    <td class='errorCase'><div class='testcase'>test_217_msisdn_remark: 连接管理平台-通信管理-物联卡信息管理-卡号备注编辑功能</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft10.5')" >
+        错误</a>
+    <div id='div_ft10.5' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft10.5').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.登录连接管理平台
+2.进入通信管理&gt;物联卡信息管理，搜索特定的卡号
+192.168.156.207:1521/iot
+192.168.156.207:1521/iot
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_CommunicationMgt\CommunicationMgt.py", line 104, in test_217_msisdn_remark
+    msisdn_info = Res_CommunicationMgt.search_communicatinMgt(driver)
+  File "E:\Script\UI\Commons\ECSS_CommunicationMgt\Res_CommunicationMgt.py", line 44, in search_communicatinMgt
+    simInfo = commun_page.get_first_row_elems_list()
+  File "E:\Script\UI\View\ECSS_CommunicationMgt_Page\CommunicationMgtPage.py", line 166, in get_first_row_elems_list
+    elems_value = self.get_textlist_from_page_u(elems_loc)
+  File "E:\Script\UI\Libraries\Page.py", line 183, in get_textlist_from_page_u
+    for i in range(0, len(elems)):
+TypeError: object of type 'NoneType' has no len()
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft10.5')">展示图片</a>
+    <div id='div_capture_ft10.5' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='ft10.6' class='none'>
+    <td class='errorCase'><div class='testcase'>test_218_msisdn_detail_remark: 连接管理平台-通信管理-物联卡信息管理-详细备注编辑功能</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft10.6')" >
+        错误</a>
+    <div id='div_ft10.6' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft10.6').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.登录连接管理平台
+2.进入通信管理&gt;物联卡信息管理，搜索特定的卡号
+192.168.156.207:1521/iot
+192.168.156.207:1521/iot
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_CommunicationMgt\CommunicationMgt.py", line 113, in test_218_msisdn_detail_remark
+    msisdnInfo = Res_CommunicationMgt.search_communicatinMgt(driver)
+  File "E:\Script\UI\Commons\ECSS_CommunicationMgt\Res_CommunicationMgt.py", line 44, in search_communicatinMgt
+    simInfo = commun_page.get_first_row_elems_list()
+  File "E:\Script\UI\View\ECSS_CommunicationMgt_Page\CommunicationMgtPage.py", line 166, in get_first_row_elems_list
+    elems_value = self.get_textlist_from_page_u(elems_loc)
+  File "E:\Script\UI\Libraries\Page.py", line 183, in get_textlist_from_page_u
+    for i in range(0, len(elems)):
+TypeError: object of type 'NoneType' has no len()
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft10.6')">展示图片</a>
+    <div id='div_capture_ft10.6' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='ft10.7' class='none'>
+    <td class='errorCase'><div class='testcase'>test_221_detail_diagnosis: 连接管理平台-通信管理-物联卡信息管理-详细诊断查询</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft10.7')" >
+        错误</a>
+    <div id='div_ft10.7' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft10.7').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.登录连接管理平台
+2. 进入通信管理&gt;物联卡信息管理
+192.168.156.207:1521/iot
+192.168.156.207:1521/iot
+2. 详细诊断页面检查
+&lt;View.ECSS_CommunicationMgt_Page.DetailDiagPage.DetailDiagPage object at 0x00000000162FAE48&gt; 页面中未能找到 ('xpath', ".//*[starts-with(@ng-click, 'cardDiagnosisDetailQueryFun')]/span") 元素
+Traceback (most recent call last):
+  File "E:\Script\UI\Libraries\Page.py", line 135, in oper_click
+    self.find_element(*loc).click()
+AttributeError: 'NoneType' object has no attribute 'click'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_CommunicationMgt\CommunicationMgt.py", line 146, in test_221_detail_diagnosis
+    flag = Res_DetailDiagnoise.check_detail_diags(driver)
+  File "E:\Script\UI\Commons\ECSS_CommunicationMgt\Res_DetailDiagnoise.py", line 46, in check_detail_diags
+    DetailDiagnosisPage.click_detail_diagnosis()
+  File "E:\Script\UI\View\ECSS_CommunicationMgt_Page\DetailDiagPage.py", line 51, in click_detail_diagnosis
+    self.oper_click(self.detail_diag_loc)
+  File "E:\Script\UI\Libraries\Page.py", line 137, in oper_click
+    raise ValueError("控件不可用或者定位失败")
+ValueError: 控件不可用或者定位失败
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft10.7')">展示图片</a>
+    <div id='div_capture_ft10.7' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='ft10.8' class='none'>
+    <td class='errorCase'><div class='testcase'>test_222_power_state_query: 连接管理平台-通信管理-物联卡信息管理-开关机状态查询</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft10.8')" >
+        错误</a>
+    <div id='div_ft10.8' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft10.8').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.登录连接管理平台
+2. 当前开关机状态查询
+192.168.156.207:1521/iot
+192.168.156.207:1521/iot
+  (1)通过‘物联卡号’查询Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_CommunicationMgt\CommunicationMgt.py", line 153, in test_222_power_state_query
+    flag = Res_CommunicationMgt.query_msisdn_power_state(driver)
+  File "E:\Script\UI\Commons\ECSS_CommunicationMgt\Res_CommunicationMgt.py", line 615, in query_msisdn_power_state
+    page_values = commPage.get_power_list()
+  File "E:\Script\UI\View\ECSS_CommunicationMgt_Page\CommunicationMgtPage.py", line 350, in get_power_list
+    return self.get_textlist_from_page_u(self.power_values_loc)
+  File "E:\Script\UI\Libraries\Page.py", line 183, in get_textlist_from_page_u
+    for i in range(0, len(elems)):
+TypeError: object of type 'NoneType' has no len()
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft10.8')">展示图片</a>
+    <div id='div_capture_ft10.8' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr class='errorClass'>
+    <td>Module.ECSSPortal_RiskControl.RiskControl.RiskContrl</td>
+    <td>1</td>
+    <td>0</td>
+    <td>0</td>
+    <td>1</td>
+    <td><a href="javascript:showClassDetail('c11',1)">详细</a></td>
+    <td>&nbsp;</td>
+</tr>
+
+<tr id='ft11.1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_311_search_operateLog: 连接管理平台-风险控制-操作日志查询-简单查询</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft11.1')" >
+        错误</a>
+    <div id='div_ft11.1' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft11.1').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.登陆连接管理平台
+2.操作日志查询
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_RiskControl\RiskControl.py", line 28, in test_311_search_operateLog
+    flag = search_operate_log(driver)
+  File "E:\Script\UI\Commons\ECSS_RickControl\Res_OpertorLog.py", line 37, in search_operate_log
+    data_number = UtilityFunctions.get_data_total_num(driver, operlog_page.totoal_num_loc)
+  File "E:\Script\UI\Libraries\UtilityFunctions.py", line 770, in get_data_total_num
+    page_str = driver.find_element_by_xpath(xpath).text
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 385, in find_element_by_xpath
+    return self.find_element(by=By.XPATH, value=xpath)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 955, in find_element
+    'value': value})['value']
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 312, in execute
+    self.error_handler.check_response(response)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 242, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchElementException: Message: Unable to locate element: .//*[@id='content']/div/div[4]/p[1]
+
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft11.1')">展示图片</a>
+    <div id='div_capture_ft11.1' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr class='errorClass'>
+    <td>Module.ECSSPortal_AutoRulesMgt.RuleMgt.AutoRule</td>
+    <td>19</td>
+    <td>0</td>
+    <td>0</td>
+    <td>19</td>
+    <td><a href="javascript:showClassDetail('c12',19)">详细</a></td>
+    <td>&nbsp;</td>
+</tr>
+
+<tr id='ft12.1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_511_rule_mgt_query: 连接管理平台-自动化规则-规则管理-新增规则-物联卡查询</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft12.1')" >
+        错误</a>
+    <div id='div_ft12.1' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft12.1').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.全网运营商登录portal
+2. 进入规则管理页面
+3. 检查 新增规则-物联卡查询
+  3-1. 点击【新增规则】
+192.168.156.207:1521/iot
+192.168.156.207:1521/iot
+  3-2. 添加物联卡-普通查询 
+     (1). 通过‘物联卡号’查询 Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_AutoRulesMgt\RuleMgt.py", line 84, in test_511_rule_mgt_query
+    flag = add_rule_query_msisdn(driver)
+  File "E:\Script\UI\Commons\ECSS_AutoRuleMgt\Res_RuleAdd.py", line 43, in add_rule_query_msisdn
+    flag_add_normal = add_rule_msisdn_query_normal(driver, msisdn)
+  File "E:\Script\UI\Commons\ECSS_AutoRuleMgt\Res_RuleAdd.py", line 80, in add_rule_msisdn_query_normal
+    addRulePage.input_search_msisdn(msisdn[0])
+  File "E:\Script\UI\View\ECSS_AutoRuleMgt_Page\AddRulePage.py", line 194, in input_search_msisdn
+    self.send_keys(self.query_search_text_loc, searchValue)
+  File "E:\Script\UI\Libraries\Page.py", line 120, in send_keys
+    self.find_element(*loc).click()
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webelement.py", line 80, in click
+    self._execute(Command.CLICK_ELEMENT)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webelement.py", line 628, in _execute
+    return self._parent.execute(command, params)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 312, in execute
+    self.error_handler.check_response(response)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 242, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.ElementClickInterceptedException: Message: Element &lt;input class="form-control input-tpl col-lg-7 ng-pristine ng-untouched ng-valid ng-isolate-scope ng-empty" type="text"&gt; is not clickable at point (711.375,583) because another element &lt;div id="sys-loading" class="sys-loading "&gt; obscures it
+
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft12.1')">展示图片</a>
+    <div id='div_capture_ft12.1' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='ft12.2' class='none'>
+    <td class='errorCase'><div class='testcase'>test_512_add_cards_rule: 连接管理平台-自动化规则-规则管理-规则管理-新增-物联卡类</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft12.2')" >
+        错误</a>
+    <div id='div_ft12.2' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft12.2').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.全网运营商登录portal
+2. 进入规则管理页面
+3. 检查 规则管理-新增-物联卡类
+  3.1 添加物联卡类
+&lt;View.ECSS_AutoRuleMgt_Page.AddRulePage.AddRulePage object at 0x000000001631F7F0&gt; 页面中未能找到 ('xpath', ".//*[contains(text(), '本集团所有号码')]/preceding-sibling::*[1]") 元素
+Traceback (most recent call last):
+  File "E:\Script\UI\Libraries\Page.py", line 135, in oper_click
+    self.find_element(*loc).click()
+AttributeError: 'NoneType' object has no attribute 'click'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_AutoRulesMgt\RuleMgt.py", line 94, in test_512_add_cards_rule
+    flag = check_add_card_rule(driver, ruleName_1, type_msisdn, "", "", telPhone, telPhoneList, email, emailList)
+  File "E:\Script\UI\Commons\ECSS_AutoRuleMgt\Res_RuleAdd.py", line 236, in check_add_card_rule
+    addRulePage.click_all_msisdn_checkbox()
+  File "E:\Script\UI\View\ECSS_AutoRuleMgt_Page\AddRulePage.py", line 181, in click_all_msisdn_checkbox
+    self.oper_click(self.cust_all_msisdn_loc)
+  File "E:\Script\UI\Libraries\Page.py", line 137, in oper_click
+    raise ValueError("控件不可用或者定位失败")
+ValueError: 控件不可用或者定位失败
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft12.2')">展示图片</a>
+    <div id='div_capture_ft12.2' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='ft12.3' class='none'>
+    <td class='errorCase'><div class='testcase'>test_513_query: 连接管理平台-自动化规则-规则管理-规则管理查询</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft12.3')" >
+        错误</a>
+    <div id='div_ft12.3' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft12.3').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.全网运营商登录portal
+2. 进入规则管理页面
+3. 检查规则名是否存在，如果不存在则插入测试数据
+192.168.156.207:1521/iot
+192.168.156.207:1521/iot
+4. 验证 规则管理-规则管理查询
+192.168.156.207:1521/iot
+192.168.156.207:1521/iot
+  3-1. 按‘规则名’查询 Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_AutoRulesMgt\RuleMgt.py", line 105, in test_513_query
+    flag = query_rule_with_condition(driver, queryRuleName, "物联卡类")
+  File "E:\Script\UI\Commons\ECSS_AutoRuleMgt\Res_RuleQuery.py", line 72, in query_rule_with_condition
+    rule_page1 = rulePage.get_row_rule_info()
+  File "E:\Script\UI\View\ECSS_AutoRuleMgt_Page\RuleMgtPage.py", line 135, in get_row_rule_info
+    return self.get_textlist_from_page_u(self.row_rule_info_loc)
+  File "E:\Script\UI\Libraries\Page.py", line 183, in get_textlist_from_page_u
+    for i in range(0, len(elems)):
+TypeError: object of type 'NoneType' has no len()
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft12.3')">展示图片</a>
+    <div id='div_capture_ft12.3' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='ft12.4' class='none'>
+    <td class='errorCase'><div class='testcase'>test_514_linked_to_rule_history: 连接管理平台-自动化规则-规则管理页面历史详情LINK</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft12.4')" >
+        错误</a>
+    <div id='div_ft12.4' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft12.4').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.全网运营商登录portal
+2. 进入规则管理页面
+3. 检查规则名是否存在，如果不存在则插入测试数据
+192.168.156.207:1521/iot
+192.168.156.207:1521/iot
+4. 按规则名称搜索
+5. 验证 规则管理页面历史详情LINK
+&lt;View.ECSS_AutoRuleMgt_Page.RuleMgtPage.RuleMgtPage object at 0x000000001631FC18&gt; 页面中未能找到 ('xpath', ".//*[text()='查看']") 元素
+Traceback (most recent call last):
+  File "E:\Script\UI\Libraries\Page.py", line 135, in oper_click
+    self.find_element(*loc).click()
+AttributeError: 'NoneType' object has no attribute 'click'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_AutoRulesMgt\RuleMgt.py", line 118, in test_514_linked_to_rule_history
+    flag = linked_to_history(driver)
+  File "E:\Script\UI\Commons\ECSS_AutoRuleMgt\Res_RuleQuery.py", line 144, in linked_to_history
+    rulePage.click_log_link()
+  File "E:\Script\UI\View\ECSS_AutoRuleMgt_Page\RuleMgtPage.py", line 170, in click_log_link
+    self.oper_click(self.log_link_loc)
+  File "E:\Script\UI\Libraries\Page.py", line 137, in oper_click
+    raise ValueError("控件不可用或者定位失败")
+ValueError: 控件不可用或者定位失败
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft12.4')">展示图片</a>
+    <div id='div_capture_ft12.4' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='ft12.5' class='none'>
+    <td class='errorCase'><div class='testcase'>test_515_linked_the_rule_name: 连接管理平台-自动化规则-规则管理-规则名称LINK</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft12.5')" >
+        错误</a>
+    <div id='div_ft12.5' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft12.5').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.全网运营商登录portal
+2. 进入规则管理页面
+3. 检查规则名是否存在，如果不存在则插入测试数据
+192.168.156.207:1521/iot
+192.168.156.207:1521/iot
+4. 按规则名称搜索
+5. 验证 规则管理-规则名称LINK
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_AutoRulesMgt\RuleMgt.py", line 131, in test_515_linked_the_rule_name
+    flag = link_to_rule_detail_page(driver)
+  File "E:\Script\UI\Commons\ECSS_AutoRuleMgt\Res_RuleQuery.py", line 164, in link_to_rule_detail_page
+    page_rule = rule_page.get_row_rule_info()
+  File "E:\Script\UI\View\ECSS_AutoRuleMgt_Page\RuleMgtPage.py", line 135, in get_row_rule_info
+    return self.get_textlist_from_page_u(self.row_rule_info_loc)
+  File "E:\Script\UI\Libraries\Page.py", line 183, in get_textlist_from_page_u
+    for i in range(0, len(elems)):
+TypeError: object of type 'NoneType' has no len()
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft12.5')">展示图片</a>
+    <div id='div_capture_ft12.5' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='ft12.6' class='none'>
+    <td class='errorCase'><div class='testcase'>test_516_pause_cards_rule: 连接管理平台-自动化规则-规则管理-暂停-物联卡类</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft12.6')" >
+        错误</a>
+    <div id='div_ft12.6' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft12.6').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.全网运营商登录portal
+2. 进入规则管理页面
+3. 按规则名称搜索
+4. 检查 规则管理-暂停-物联卡类
+  3-1 检查 取消暂停 &lt;View.ECSS_AutoRuleMgt_Page.RuleMgtPage.RuleMgtPage object at 0x000000001631F748&gt; 页面中未能找到 ('xpath', ".//*[@id='content']/div/div[3]/div/table/tbody/tr[1]/td[2]") 元素
+&lt;View.ECSS_AutoRuleMgt_Page.RuleMgtPage.RuleMgtPage object at 0x000000001631F748&gt; page does not have "('xpath', ".//*[@id='content']/div/div[3]/div/table/tbody/tr[1]/td[2]")" locator
+&lt;View.ECSS_AutoRuleMgt_Page.RuleMgtPage.RuleMgtPage object at 0x000000001631F748&gt; 页面中未能找到 ('partial link text', '暂停') 元素
+Traceback (most recent call last):
+  File "E:\Script\UI\Libraries\Page.py", line 135, in oper_click
+    self.find_element(*loc).click()
+AttributeError: 'NoneType' object has no attribute 'click'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_AutoRulesMgt\RuleMgt.py", line 142, in test_516_pause_cards_rule
+    flag = check_pause_rule(driver, ruleName_1)
+  File "E:\Script\UI\Commons\ECSS_AutoRuleMgt\Res_RulePause.py", line 21, in check_pause_rule
+    flag_cancel = check_cancel_operate_rule(driver, ruleName)
+  File "E:\Script\UI\Commons\ECSS_AutoRuleMgt\Res_RulePause.py", line 78, in check_cancel_operate_rule
+    rulePage.click_pause_link()
+  File "E:\Script\UI\View\ECSS_AutoRuleMgt_Page\RuleMgtPage.py", line 158, in click_pause_link
+    self.oper_click(self.rule_pause_loc)
+  File "E:\Script\UI\Libraries\Page.py", line 137, in oper_click
+    raise ValueError("控件不可用或者定位失败")
+ValueError: 控件不可用或者定位失败
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft12.6')">展示图片</a>
+    <div id='div_capture_ft12.6' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='ft12.7' class='none'>
+    <td class='errorCase'><div class='testcase'>test_517_modify_cards_rule: 连接管理平台-自动化规则-规则管理-修改-物联卡类</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft12.7')" >
+        错误</a>
+    <div id='div_ft12.7' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft12.7').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.全网运营商登录portal
+2. 进入规则管理页面
+3. 按规则名称搜索
+4. 修改规则
+&lt;View.ECSS_AutoRuleMgt_Page.RuleMgtPage.RuleMgtPage object at 0x000000001631FE10&gt; 页面中未能找到 ('partial link text', '修改') 元素
+Traceback (most recent call last):
+  File "E:\Script\UI\Libraries\Page.py", line 135, in oper_click
+    self.find_element(*loc).click()
+AttributeError: 'NoneType' object has no attribute 'click'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_AutoRulesMgt\RuleMgt.py", line 153, in test_517_modify_cards_rule
+    modify_cards_rule(driver, modify_name1, "物联卡类", "", "", new_tel, new_email)
+  File "E:\Script\UI\Commons\ECSS_AutoRuleMgt\Res_RuleModify.py", line 30, in modify_cards_rule
+    rulePage.click_rule_modify()
+  File "E:\Script\UI\View\ECSS_AutoRuleMgt_Page\RuleMgtPage.py", line 183, in click_rule_modify
+    self.oper_click(self.rule_modify_loc)
+  File "E:\Script\UI\Libraries\Page.py", line 137, in oper_click
+    raise ValueError("控件不可用或者定位失败")
+ValueError: 控件不可用或者定位失败
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft12.7')">展示图片</a>
+    <div id='div_capture_ft12.7' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='ft12.8' class='none'>
+    <td class='errorCase'><div class='testcase'>test_518_recover_cards_rule: 连接管理平台-自动化规则-规则管理-恢复-物联卡类</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft12.8')" >
+        错误</a>
+    <div id='div_ft12.8' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft12.8').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.全网运营商登录portal
+2. 进入规则管理页面
+3. 按规则名称搜索
+3. 检查 规则管理-恢复-物联卡类
+&lt;View.ECSS_AutoRuleMgt_Page.RuleMgtPage.RuleMgtPage object at 0x000000001631FE10&gt; 页面中未能找到 ('xpath', ".//*[@id='content']/div/div[3]/div/table/tbody/tr[1]/td[2]") 元素
+&lt;View.ECSS_AutoRuleMgt_Page.RuleMgtPage.RuleMgtPage object at 0x000000001631FE10&gt; page does not have "('xpath', ".//*[@id='content']/div/div[3]/div/table/tbody/tr[1]/td[2]")" locator
+&lt;View.ECSS_AutoRuleMgt_Page.RuleMgtPage.RuleMgtPage object at 0x000000001631FE10&gt; 页面中未能找到 ('partial link text', '恢复') 元素
+Traceback (most recent call last):
+  File "E:\Script\UI\Libraries\Page.py", line 135, in oper_click
+    self.find_element(*loc).click()
+AttributeError: 'NoneType' object has no attribute 'click'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_AutoRulesMgt\RuleMgt.py", line 166, in test_518_recover_cards_rule
+    flag = check_resume_alarm(driver)
+  File "E:\Script\UI\Commons\ECSS_AutoRuleMgt\Res_RuleResume.py", line 36, in check_resume_alarm
+    rulePage.click_rule_resume()
+  File "E:\Script\UI\View\ECSS_AutoRuleMgt_Page\RuleMgtPage.py", line 178, in click_rule_resume
+    self.oper_click(self.rule_resume_loc)
+  File "E:\Script\UI\Libraries\Page.py", line 137, in oper_click
+    raise ValueError("控件不可用或者定位失败")
+ValueError: 控件不可用或者定位失败
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft12.8')">展示图片</a>
+    <div id='div_capture_ft12.8' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='ft12.9' class='none'>
+    <td class='errorCase'><div class='testcase'>test_519_delete_cards_rule: 连接管理平台-自动化规则-规则管理-删除-物联卡类</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft12.9')" >
+        错误</a>
+    <div id='div_ft12.9' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft12.9').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.全网运营商登录portal
+2. 进入规则管理页面
+3. 按规则名称搜索
+3. 检查 规则管理-删除-物联卡类
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_AutoRulesMgt\RuleMgt.py", line 177, in test_519_delete_cards_rule
+    flag = check_delete_rule(driver)
+  File "E:\Script\UI\Commons\ECSS_AutoRuleMgt\Res_RuleDelete.py", line 20, in check_delete_rule
+    Res_RulePause.pause_rule(driver)
+  File "E:\Script\UI\Commons\ECSS_AutoRuleMgt\Res_RulePause.py", line 44, in pause_rule
+    page_rule = rulePage.get_row_rule_info()
+  File "E:\Script\UI\View\ECSS_AutoRuleMgt_Page\RuleMgtPage.py", line 135, in get_row_rule_info
+    return self.get_textlist_from_page_u(self.row_rule_info_loc)
+  File "E:\Script\UI\Libraries\Page.py", line 183, in get_textlist_from_page_u
+    for i in range(0, len(elems)):
+TypeError: object of type 'NoneType' has no len()
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft12.9')">展示图片</a>
+    <div id='div_capture_ft12.9' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='ft12.10' class='none'>
+    <td class='errorCase'><div class='testcase'>test_521_add_gprs_connection_rule: 连接管理平台-自动化规则-规则管理-新增-通信连接类</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft12.10')" >
+        错误</a>
+    <div id='div_ft12.10' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft12.10').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.全网运营商登录portal
+2. 进入规则管理页面
+3. 检查 规则管理-新增-通信连接类
+  3.1 添加通信连接类
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_AutoRulesMgt\RuleMgt.py", line 194, in test_521_add_gprs_connection_rule
+    telPhone, telPhoneList, email, emailList)
+  File "E:\Script\UI\Commons\ECSS_AutoRuleMgt\Res_RuleAdd.py", line 287, in check_add_gprs_connection_rule
+    addPage.click_submit()
+  File "E:\Script\UI\View\ECSS_AutoRuleMgt_Page\AddRulePage.py", line 426, in click_submit
+    self.oper_click(self.add_submit_loc)
+  File "E:\Script\UI\Libraries\Page.py", line 135, in oper_click
+    self.find_element(*loc).click()
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webelement.py", line 80, in click
+    self._execute(Command.CLICK_ELEMENT)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webelement.py", line 628, in _execute
+    return self._parent.execute(command, params)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 312, in execute
+    self.error_handler.check_response(response)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 242, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.ElementClickInterceptedException: Message: Element &lt;a class="btn btn-primary"&gt; is not clickable at point (302,860.5) because another element &lt;div id="sys-loading" class="sys-loading "&gt; obscures it
+
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft12.10')">展示图片</a>
+    <div id='div_capture_ft12.10' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='ft12.11' class='none'>
+    <td class='errorCase'><div class='testcase'>test_522_pause_gprs_connection_rule: 连接管理平台-自动化规则-规则管理-暂停-通信连接类</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft12.11')" >
+        错误</a>
+    <div id='div_ft12.11' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft12.11').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.全网运营商登录portal
+2. 进入规则管理页面
+3. 按规则名称搜索
+4. 检查 规则管理-暂停-通信连接类
+  3-1 检查 取消暂停 &lt;View.ECSS_AutoRuleMgt_Page.RuleMgtPage.RuleMgtPage object at 0x0000000013573940&gt; 页面中未能找到 ('xpath', ".//*[@id='content']/div/div[3]/div/table/tbody/tr[1]/td[2]") 元素
+&lt;View.ECSS_AutoRuleMgt_Page.RuleMgtPage.RuleMgtPage object at 0x0000000013573940&gt; page does not have "('xpath', ".//*[@id='content']/div/div[3]/div/table/tbody/tr[1]/td[2]")" locator
+&lt;View.ECSS_AutoRuleMgt_Page.RuleMgtPage.RuleMgtPage object at 0x0000000013573940&gt; 页面中未能找到 ('partial link text', '暂停') 元素
+Traceback (most recent call last):
+  File "E:\Script\UI\Libraries\Page.py", line 135, in oper_click
+    self.find_element(*loc).click()
+AttributeError: 'NoneType' object has no attribute 'click'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_AutoRulesMgt\RuleMgt.py", line 205, in test_522_pause_gprs_connection_rule
+    flag = check_pause_rule(driver, ruleName_2)
+  File "E:\Script\UI\Commons\ECSS_AutoRuleMgt\Res_RulePause.py", line 21, in check_pause_rule
+    flag_cancel = check_cancel_operate_rule(driver, ruleName)
+  File "E:\Script\UI\Commons\ECSS_AutoRuleMgt\Res_RulePause.py", line 78, in check_cancel_operate_rule
+    rulePage.click_pause_link()
+  File "E:\Script\UI\View\ECSS_AutoRuleMgt_Page\RuleMgtPage.py", line 158, in click_pause_link
+    self.oper_click(self.rule_pause_loc)
+  File "E:\Script\UI\Libraries\Page.py", line 137, in oper_click
+    raise ValueError("控件不可用或者定位失败")
+ValueError: 控件不可用或者定位失败
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft12.11')">展示图片</a>
+    <div id='div_capture_ft12.11' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='ft12.12' class='none'>
+    <td class='errorCase'><div class='testcase'>test_523_modify_gprs_connection_rule: 连接管理平台-自动化规则-规则管理-修改-通信连接类</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft12.12')" >
+        错误</a>
+    <div id='div_ft12.12' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft12.12').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.全网运营商登录portal
+2. 进入规则管理页面
+3. 按规则名称搜索
+4. 修改规则
+&lt;View.ECSS_AutoRuleMgt_Page.RuleMgtPage.RuleMgtPage object at 0x00000000135739E8&gt; 页面中未能找到 ('partial link text', '修改') 元素
+Traceback (most recent call last):
+  File "E:\Script\UI\Libraries\Page.py", line 135, in oper_click
+    self.find_element(*loc).click()
+AttributeError: 'NoneType' object has no attribute 'click'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_AutoRulesMgt\RuleMgt.py", line 216, in test_523_modify_gprs_connection_rule
+    modify_gprs_connection_rule(driver, modify_name2, "over", "10", new_tel, new_email)
+  File "E:\Script\UI\Commons\ECSS_AutoRuleMgt\Res_RuleModify.py", line 83, in modify_gprs_connection_rule
+    rulePage.click_rule_modify()
+  File "E:\Script\UI\View\ECSS_AutoRuleMgt_Page\RuleMgtPage.py", line 183, in click_rule_modify
+    self.oper_click(self.rule_modify_loc)
+  File "E:\Script\UI\Libraries\Page.py", line 137, in oper_click
+    raise ValueError("控件不可用或者定位失败")
+ValueError: 控件不可用或者定位失败
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft12.12')">展示图片</a>
+    <div id='div_capture_ft12.12' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='ft12.13' class='none'>
+    <td class='errorCase'><div class='testcase'>test_524_recover_gprs_connection_rule: 连接管理平台-自动化规则-规则管理-恢复-通信连接类</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft12.13')" >
+        错误</a>
+    <div id='div_ft12.13' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft12.13').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.全网运营商登录portal
+2. 进入规则管理页面
+3. 按规则名称搜索
+3. 检查 规则管理-恢复-通信连接类
+&lt;View.ECSS_AutoRuleMgt_Page.RuleMgtPage.RuleMgtPage object at 0x000000001638DE10&gt; 页面中未能找到 ('xpath', ".//*[@id='content']/div/div[3]/div/table/tbody/tr[1]/td[2]") 元素
+&lt;View.ECSS_AutoRuleMgt_Page.RuleMgtPage.RuleMgtPage object at 0x000000001638DE10&gt; page does not have "('xpath', ".//*[@id='content']/div/div[3]/div/table/tbody/tr[1]/td[2]")" locator
+&lt;View.ECSS_AutoRuleMgt_Page.RuleMgtPage.RuleMgtPage object at 0x000000001638DE10&gt; 页面中未能找到 ('partial link text', '恢复') 元素
+Traceback (most recent call last):
+  File "E:\Script\UI\Libraries\Page.py", line 135, in oper_click
+    self.find_element(*loc).click()
+AttributeError: 'NoneType' object has no attribute 'click'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_AutoRulesMgt\RuleMgt.py", line 229, in test_524_recover_gprs_connection_rule
+    flag = check_resume_alarm(driver)
+  File "E:\Script\UI\Commons\ECSS_AutoRuleMgt\Res_RuleResume.py", line 36, in check_resume_alarm
+    rulePage.click_rule_resume()
+  File "E:\Script\UI\View\ECSS_AutoRuleMgt_Page\RuleMgtPage.py", line 178, in click_rule_resume
+    self.oper_click(self.rule_resume_loc)
+  File "E:\Script\UI\Libraries\Page.py", line 137, in oper_click
+    raise ValueError("控件不可用或者定位失败")
+ValueError: 控件不可用或者定位失败
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft12.13')">展示图片</a>
+    <div id='div_capture_ft12.13' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='ft12.14' class='none'>
+    <td class='errorCase'><div class='testcase'>test_525_delete_gprs_connection_rule: 连接管理平台-自动化规则-规则管理-删除-通信连接类</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft12.14')" >
+        错误</a>
+    <div id='div_ft12.14' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft12.14').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.全网运营商登录portal
+2. 进入规则管理页面
+3. 按规则名称搜索
+3. 检查 规则管理-删除-通信连接类
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_AutoRulesMgt\RuleMgt.py", line 240, in test_525_delete_gprs_connection_rule
+    flag = check_delete_rule(driver)
+  File "E:\Script\UI\Commons\ECSS_AutoRuleMgt\Res_RuleDelete.py", line 20, in check_delete_rule
+    Res_RulePause.pause_rule(driver)
+  File "E:\Script\UI\Commons\ECSS_AutoRuleMgt\Res_RulePause.py", line 44, in pause_rule
+    page_rule = rulePage.get_row_rule_info()
+  File "E:\Script\UI\View\ECSS_AutoRuleMgt_Page\RuleMgtPage.py", line 135, in get_row_rule_info
+    return self.get_textlist_from_page_u(self.row_rule_info_loc)
+  File "E:\Script\UI\Libraries\Page.py", line 183, in get_textlist_from_page_u
+    for i in range(0, len(elems)):
+TypeError: object of type 'NoneType' has no len()
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft12.14')">展示图片</a>
+    <div id='div_capture_ft12.14' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='ft12.15' class='none'>
+    <td class='errorCase'><div class='testcase'>test_526_add_monitor_rule: 连接管理平台-自动化规则-规则管理-新增-用量监控类</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft12.15')" >
+        错误</a>
+    <div id='div_ft12.15' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft12.15').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.全网运营商登录portal
+2. 进入规则管理页面
+3. 检查 规则管理-新增-用量监控类
+  3.1 添加用量监控类
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_AutoRulesMgt\RuleMgt.py", line 250, in test_526_add_monitor_rule
+    telPhone, telPhoneList, email,emailList, upload_file)
+  File "E:\Script\UI\Commons\ECSS_AutoRuleMgt\Res_RuleAdd.py", line 353, in check_add_monitor_rule
+    addPage.click_submit()
+  File "E:\Script\UI\View\ECSS_AutoRuleMgt_Page\AddRulePage.py", line 426, in click_submit
+    self.oper_click(self.add_submit_loc)
+  File "E:\Script\UI\Libraries\Page.py", line 135, in oper_click
+    self.find_element(*loc).click()
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webelement.py", line 80, in click
+    self._execute(Command.CLICK_ELEMENT)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webelement.py", line 628, in _execute
+    return self._parent.execute(command, params)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 312, in execute
+    self.error_handler.check_response(response)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 242, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.ElementClickInterceptedException: Message: Element &lt;a class="btn btn-primary"&gt; is not clickable at point (302,861) because another element &lt;div class="row myModal-popup ng-isolate-scope"&gt; obscures it
+
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft12.15')">展示图片</a>
+    <div id='div_capture_ft12.15' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='ft12.16' class='none'>
+    <td class='errorCase'><div class='testcase'>test_527_pause_monitor_rule: 连接管理平台-自动化规则-规则管理-暂停-用量监控类</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft12.16')" >
+        错误</a>
+    <div id='div_ft12.16' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft12.16').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.全网运营商登录portal
+2. 进入规则管理页面
+3. 按规则名称搜索
+4. 检查 规则管理-暂停-用量监控类
+  3-1 检查 取消暂停 &lt;View.ECSS_AutoRuleMgt_Page.RuleMgtPage.RuleMgtPage object at 0x000000001638BC88&gt; 页面中未能找到 ('xpath', ".//*[@id='content']/div/div[3]/div/table/tbody/tr[1]/td[2]") 元素
+&lt;View.ECSS_AutoRuleMgt_Page.RuleMgtPage.RuleMgtPage object at 0x000000001638BC88&gt; page does not have "('xpath', ".//*[@id='content']/div/div[3]/div/table/tbody/tr[1]/td[2]")" locator
+&lt;View.ECSS_AutoRuleMgt_Page.RuleMgtPage.RuleMgtPage object at 0x000000001638BC88&gt; 页面中未能找到 ('partial link text', '暂停') 元素
+Traceback (most recent call last):
+  File "E:\Script\UI\Libraries\Page.py", line 135, in oper_click
+    self.find_element(*loc).click()
+AttributeError: 'NoneType' object has no attribute 'click'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_AutoRulesMgt\RuleMgt.py", line 261, in test_527_pause_monitor_rule
+    flag = check_pause_rule(driver, ruleName_3)
+  File "E:\Script\UI\Commons\ECSS_AutoRuleMgt\Res_RulePause.py", line 21, in check_pause_rule
+    flag_cancel = check_cancel_operate_rule(driver, ruleName)
+  File "E:\Script\UI\Commons\ECSS_AutoRuleMgt\Res_RulePause.py", line 78, in check_cancel_operate_rule
+    rulePage.click_pause_link()
+  File "E:\Script\UI\View\ECSS_AutoRuleMgt_Page\RuleMgtPage.py", line 158, in click_pause_link
+    self.oper_click(self.rule_pause_loc)
+  File "E:\Script\UI\Libraries\Page.py", line 137, in oper_click
+    raise ValueError("控件不可用或者定位失败")
+ValueError: 控件不可用或者定位失败
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft12.16')">展示图片</a>
+    <div id='div_capture_ft12.16' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='ft12.17' class='none'>
+    <td class='errorCase'><div class='testcase'>test_528_modify_moniotr_rule: 连接管理平台-自动化规则-规则管理-修改-用量监控类</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft12.17')" >
+        错误</a>
+    <div id='div_ft12.17' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft12.17').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.全网运营商登录portal
+2. 进入规则管理页面
+3. 按规则名称搜索
+4. 修改规则
+&lt;View.ECSS_AutoRuleMgt_Page.RuleMgtPage.RuleMgtPage object at 0x00000000163E3A58&gt; 页面中未能找到 ('partial link text', '修改') 元素
+Traceback (most recent call last):
+  File "E:\Script\UI\Libraries\Page.py", line 135, in oper_click
+    self.find_element(*loc).click()
+AttributeError: 'NoneType' object has no attribute 'click'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_AutoRulesMgt\RuleMgt.py", line 272, in test_528_modify_moniotr_rule
+    modify_monitor_rule(driver, modify_name3, "短信昨日使用量", "lower", "100", new_tel, new_email)
+  File "E:\Script\UI\Commons\ECSS_AutoRuleMgt\Res_RuleModify.py", line 135, in modify_monitor_rule
+    rulePage.click_rule_modify()
+  File "E:\Script\UI\View\ECSS_AutoRuleMgt_Page\RuleMgtPage.py", line 183, in click_rule_modify
+    self.oper_click(self.rule_modify_loc)
+  File "E:\Script\UI\Libraries\Page.py", line 137, in oper_click
+    raise ValueError("控件不可用或者定位失败")
+ValueError: 控件不可用或者定位失败
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft12.17')">展示图片</a>
+    <div id='div_capture_ft12.17' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='ft12.18' class='none'>
+    <td class='errorCase'><div class='testcase'>test_529_recover_onitor_rule: 连接管理平台-自动化规则-规则管理-恢复-用量监控类</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft12.18')" >
+        错误</a>
+    <div id='div_ft12.18' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft12.18').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.全网运营商登录portal
+2. 进入规则管理页面
+3. 按规则名称搜索
+3. 检查 规则管理-恢复-用量监控类
+&lt;View.ECSS_AutoRuleMgt_Page.RuleMgtPage.RuleMgtPage object at 0x00000000163C5748&gt; 页面中未能找到 ('xpath', ".//*[@id='content']/div/div[3]/div/table/tbody/tr[1]/td[2]") 元素
+&lt;View.ECSS_AutoRuleMgt_Page.RuleMgtPage.RuleMgtPage object at 0x00000000163C5748&gt; page does not have "('xpath', ".//*[@id='content']/div/div[3]/div/table/tbody/tr[1]/td[2]")" locator
+&lt;View.ECSS_AutoRuleMgt_Page.RuleMgtPage.RuleMgtPage object at 0x00000000163C5748&gt; 页面中未能找到 ('partial link text', '恢复') 元素
+Traceback (most recent call last):
+  File "E:\Script\UI\Libraries\Page.py", line 135, in oper_click
+    self.find_element(*loc).click()
+AttributeError: 'NoneType' object has no attribute 'click'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_AutoRulesMgt\RuleMgt.py", line 285, in test_529_recover_onitor_rule
+    flag = check_resume_alarm(driver)
+  File "E:\Script\UI\Commons\ECSS_AutoRuleMgt\Res_RuleResume.py", line 36, in check_resume_alarm
+    rulePage.click_rule_resume()
+  File "E:\Script\UI\View\ECSS_AutoRuleMgt_Page\RuleMgtPage.py", line 178, in click_rule_resume
+    self.oper_click(self.rule_resume_loc)
+  File "E:\Script\UI\Libraries\Page.py", line 137, in oper_click
+    raise ValueError("控件不可用或者定位失败")
+ValueError: 控件不可用或者定位失败
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft12.18')">展示图片</a>
+    <div id='div_capture_ft12.18' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='ft12.19' class='none'>
+    <td class='errorCase'><div class='testcase'>test_530_delete_monitor_rule: 连接管理平台-自动化规则-规则管理-删除-用量监控类</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft12.19')" >
+        错误</a>
+    <div id='div_ft12.19' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft12.19').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.全网运营商登录portal
+2. 进入规则管理页面
+3. 按规则名称搜索
+3. 检查 规则管理-删除-用量监控类
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_AutoRulesMgt\RuleMgt.py", line 296, in test_530_delete_monitor_rule
+    flag = check_delete_rule(driver)
+  File "E:\Script\UI\Commons\ECSS_AutoRuleMgt\Res_RuleDelete.py", line 20, in check_delete_rule
+    Res_RulePause.pause_rule(driver)
+  File "E:\Script\UI\Commons\ECSS_AutoRuleMgt\Res_RulePause.py", line 44, in pause_rule
+    page_rule = rulePage.get_row_rule_info()
+  File "E:\Script\UI\View\ECSS_AutoRuleMgt_Page\RuleMgtPage.py", line 135, in get_row_rule_info
+    return self.get_textlist_from_page_u(self.row_rule_info_loc)
+  File "E:\Script\UI\Libraries\Page.py", line 183, in get_textlist_from_page_u
+    for i in range(0, len(elems)):
+TypeError: object of type 'NoneType' has no len()
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft12.19')">展示图片</a>
+    <div id='div_capture_ft12.19' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr class='errorClass'>
+    <td>Module.ECSSPortal_StatisticAnalysis.ThisMonthUsedGPRS.StatisticAnalysis</td>
+    <td>2</td>
+    <td>0</td>
+    <td>1</td>
+    <td>1</td>
+    <td><a href="javascript:showClassDetail('c13',2)">详细</a></td>
+    <td>&nbsp;</td>
+</tr>
+
+<tr id='ft13.1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_701_this_month_used_gprs: 统计分析-用量统计报表-本月用量统计报表-查询</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft13.1')" >
+        错误</a>
+    <div id='div_ft13.1' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft13.1').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.登录ECportal
+2.进入本月用量统计报表界面
+3.检查点
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_StatisticAnalysis\ThisMonthUsedGPRS.py", line 31, in test_701_this_month_used_gprs
+    check = Res_ThisMonthUsedGPRS.checkAllSteps(driver)
+  File "E:\Script\UI\Commons\ECSS_StatisticAnalysis\Res_ThisMonthUsedGPRS.py", line 217, in checkAllSteps
+    time2 = driver.find_element_by_xpath("//*[@id='content']/div/div/div[3]/div/table/tbody/tr[1]/td[1]/span").text
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 385, in find_element_by_xpath
+    return self.find_element(by=By.XPATH, value=xpath)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 955, in find_element
+    'value': value})['value']
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 312, in execute
+    self.error_handler.check_response(response)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 242, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchElementException: Message: Unable to locate element: //*[@id='content']/div/div/div[3]/div/table/tbody/tr[1]/td[1]/span
+
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft13.1')">展示图片</a>
+    <div id='div_capture_ft13.1' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='ft13.2' class='none'>
+    <td class='failCase'><div class='testcase'>test_702_this_month_used_gprs_export: 统计分析-用量统计报表-本月用量统计报表-导出</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft13.2')" >
+        失败</a>
+    <div id='div_ft13.2' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft13.2').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.登录ECportal
+2.进入本月用量统计报表界面
+3.检查导出数据与界面展示数据一致性
+E:\Script\UI\DownloadDataStore\subsFlowMonthExportService_ecqz_898ying_20181115143527_209185.xlsx was removed!
+E:\Script\UI\DownloadDataStore\subsFlowMonthExportService_ecqz_898ying_20181115143527_209185.zip was removed!
+4.检查点
+CHECKPOINT[Failure]:统计分析-本月用量统计报表-导出数据检查
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_StatisticAnalysis\ThisMonthUsedGPRS.py", line 42, in test_702_this_month_used_gprs_export
+    checkResult(self, driver, True, result, "统计分析-本月用量统计报表-导出数据检查")
+  File "E:\Script\UI\Libraries\UtilityFunctions.py", line 155, in checkResult
+    self.fail(message)
+AssertionError: 统计分析-本月用量统计报表-导出数据检查
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft13.2')">展示图片</a>
+    <div id='div_capture_ft13.2' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr class='errorClass'>
+    <td>Module.ECSSPortal_StatisticAnalysis.CurrentCardStatus.StatisticAnalysis</td>
+    <td>1</td>
+    <td>0</td>
+    <td>0</td>
+    <td>1</td>
+    <td><a href="javascript:showClassDetail('c14',1)">详细</a></td>
+    <td>&nbsp;</td>
+</tr>
+
+<tr id='ft14.1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_703_current_card_status: 统计分析-当前卡状态报表-查询</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft14.1')" >
+        错误</a>
+    <div id='div_ft14.1' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft14.1').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.登录ECPortal
+2.进入当前卡状态报表界面
+3.检查点
+[Pass]时间格式正确
+[Pass]物联卡号格式正确
+[Pass]iccid格式正确
+[Pass]物联卡号状态格式正确
+[Pass]搜索联卡号格式正确
+[Pass]翻页后时间格式正确
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_StatisticAnalysis\CurrentCardStatus.py", line 32, in test_703_current_card_status
+    check = Res_CurrentCardStatus.checkAllSteps(driver)
+  File "E:\Script\UI\Commons\ECSS_StatisticAnalysis\Res_CurrentCardStatus.py", line 169, in checkAllSteps
+    currentCardStatus.click_expand_button()
+  File "E:\Script\UI\View\ECSS_StatisticAnalysis_Page\StatisticAnalysisPage.py", line 129, in click_expand_button
+    self.oper_click(self.expand_loc)
+  File "E:\Script\UI\Libraries\Page.py", line 135, in oper_click
+    self.find_element(*loc).click()
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webelement.py", line 80, in click
+    self._execute(Command.CLICK_ELEMENT)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webelement.py", line 628, in _execute
+    return self._parent.execute(command, params)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 312, in execute
+    self.error_handler.check_response(response)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 242, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.ElementClickInterceptedException: Message: Element &lt;button class="btn btn-more col-xs-4"&gt; is not clickable at point (1204.75,136) because another element &lt;div id="sys-loading" class="sys-loading "&gt; obscures it
+
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft14.1')">展示图片</a>
+    <div id='div_capture_ft14.1' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr class='failClass'>
+    <td>Module.ECSSPortal_StatisticAnalysis.CardCount.StatisticAnalysis</td>
+    <td>2</td>
+    <td>1</td>
+    <td>1</td>
+    <td>0</td>
+    <td><a href="javascript:showClassDetail('c15',2)">详细</a></td>
+    <td>&nbsp;</td>
+</tr>
+
+<tr id='ft15.1' class='none'>
+    <td class='failCase'><div class='testcase'>test_705_card_count: 统计分析-用量统计报表-物联卡数量统计报表-查询</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft15.1')" >
+        失败</a>
+    <div id='div_ft15.1' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft15.1').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.登录ECPortal
+2.进入物联卡数量统计报表界面
+3.检查点
+originalValue2018-11
+[Pass]时间格式正确
+[Fail]物联卡总量格式不正确
+CHECKPOINT[Failure]:统计分析-物联卡数量统计报表成功
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_StatisticAnalysis\CardCount.py", line 29, in test_705_card_count
+    checkResult(self, driver, True, check, "统计分析-物联卡数量统计报表成功")
+  File "E:\Script\UI\Libraries\UtilityFunctions.py", line 155, in checkResult
+    self.fail(message)
+AssertionError: 统计分析-物联卡数量统计报表成功
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft15.1')">展示图片</a>
+    <div id='div_capture_ft15.1' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='pt15.2' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_706_card_count_export: 统计分析-用量统计报表-物联卡数量统计报表-批量导出</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt15.2')" >
+        通过</a>
+    <div id='div_pt15.2' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_pt15.2').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.登录ECPortal
+2.进入物联卡数量统计报表界面
+3.检查点
+userCntMonthExportService_ecqz_851szh_20181206175547_135273.xlsx
+rows: 
+5
+row title
+3
+CHECKPOINT[PASS]：统计分析-物联卡数量统计导出数据正常
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_pt15.2')">展示图片</a>
+    <div id='div_capture_pt15.2' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr class='failClass'>
+    <td>Module.ECSSPortal_StatisticAnalysis.UsedGPRS.StatisticAnalysis</td>
+    <td>2</td>
+    <td>1</td>
+    <td>1</td>
+    <td>0</td>
+    <td><a href="javascript:showClassDetail('c16',2)">详细</a></td>
+    <td>&nbsp;</td>
+</tr>
+
+<tr id='ft16.1' class='none'>
+    <td class='failCase'><div class='testcase'>test_707_used_gprs: 统计分析-用量统计报表-流量使用统计报表-查询</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft16.1')" >
+        失败</a>
+    <div id='div_ft16.1' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft16.1').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.登录ECportal
+
+2.进入流量使用统计报表界面
+
+3.检查点
+
+[Pass]时间格式正确
+[Fail]物联卡总量格式不正确
+CHECKPOINT[Failure]:统计分析-流量使用统计报表-UAT测试数据检查
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_StatisticAnalysis\UsedGPRS.py", line 39, in test_707_used_gprs
+    checkResult(self, driver, True, check, "统计分析-流量使用统计报表-UAT测试数据检查")
+  File "E:\Script\UI\Libraries\UtilityFunctions.py", line 155, in checkResult
+    self.fail(message)
+AssertionError: 统计分析-流量使用统计报表-UAT测试数据检查
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft16.1')">展示图片</a>
+    <div id='div_capture_ft16.1' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='pt16.2' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_708_used_gprs_export: 统计分析-用量统计报表-流量使用统计报表-导出</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt16.2')" >
+        通过</a>
+    <div id='div_pt16.2' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_pt16.2').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.登录ECportal
+
+2.进入流量使用统计报表界面
+
+3.检查导出数据与界面展示数据一致性
+
+33333333333333333333333333
+subsFlowMonthExportService_ecqz_851szh_20181206175754_949852.xlsx
+rows: 
+5
+row title
+7
+4.检查点
+
+CHECKPOINT[PASS]：统计分析-流量使用统计报表-导出数据检查
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_pt16.2')">展示图片</a>
+    <div id='div_capture_pt16.2' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr class='errorClass'>
+    <td>Module.ECSSPortal_StatisticAnalysis.UsedSMS.StatisticAnalysis</td>
+    <td>2</td>
+    <td>0</td>
+    <td>1</td>
+    <td>1</td>
+    <td><a href="javascript:showClassDetail('c17',2)">详细</a></td>
+    <td>&nbsp;</td>
+</tr>
+
+<tr id='ft17.1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_709_used_sms: 统计分析-用量统计报表-短信使用统计报表-查询</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft17.1')" >
+        错误</a>
+    <div id='div_ft17.1' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft17.1').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.登录ECportal
+2.进入短信使用统计报表界面
+3.检查点
+['0', '0', '1', '0']
+['0', '0', '1', '0']
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_StatisticAnalysis\UsedSMS.py", line 33, in test_709_used_sms
+    check = Res_UsedSMS.checkAllSteps(driver)
+  File "E:\Script\UI\Commons\ECSS_StatisticAnalysis\Res_UsedSMS.py", line 225, in checkAllSteps
+    time2 = driver.find_element_by_xpath("//*[@id='content']/div/div[3]/table[2]/tbody/tr[1]/td[1]").text
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 385, in find_element_by_xpath
+    return self.find_element(by=By.XPATH, value=xpath)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 955, in find_element
+    'value': value})['value']
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 312, in execute
+    self.error_handler.check_response(response)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 242, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchElementException: Message: Unable to locate element: //*[@id='content']/div/div[3]/table[2]/tbody/tr[1]/td[1]
+
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft17.1')">展示图片</a>
+    <div id='div_capture_ft17.1' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='ft17.2' class='none'>
+    <td class='failCase'><div class='testcase'>test_710_used_sms_export: 统计分析-用量统计报表-短信使用统计报表-批量导出</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft17.2')" >
+        失败</a>
+    <div id='div_ft17.2' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft17.2').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.登录ECportal
+2.进入短信使用统计报表界面
+3.检查导出数据与界面展示数据一致性
+4.检查点
+CHECKPOINT[Failure]:统计分析-导出数据检查
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_StatisticAnalysis\UsedSMS.py", line 44, in test_710_used_sms_export
+    checkResult(self, driver, True, result, "统计分析-导出数据检查")
+  File "E:\Script\UI\Libraries\UtilityFunctions.py", line 155, in checkResult
+    self.fail(message)
+AssertionError: 统计分析-导出数据检查
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft17.2')">展示图片</a>
+    <div id='div_capture_ft17.2' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr class='errorClass'>
+    <td>Module.ECSSPortal_StatisticAnalysis.ECFlowDay.StatisticAnalysis</td>
+    <td>2</td>
+    <td>0</td>
+    <td>0</td>
+    <td>2</td>
+    <td><a href="javascript:showClassDetail('c18',2)">详细</a></td>
+    <td>&nbsp;</td>
+</tr>
+
+<tr id='ft18.1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_711_ec_flow_day: 统计分析-用量统计报表-集团流量趋势日报-查询</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft18.1')" >
+        错误</a>
+    <div id='div_ft18.1' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft18.1').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.登录ECportal
+2.进入集团流量趋势日报界面
+&lt;View.ECSS_StatisticAnalysis_Page.StatisticAnalysisPage.StatisticAnalysisPage object at 0x00000000163C5C50&gt; 页面中未能找到 ('xpath', ".//*[text()='集团流量趋势日报']") 元素
+Traceback (most recent call last):
+  File "E:\Script\UI\Libraries\Page.py", line 135, in oper_click
+    self.find_element(*loc).click()
+AttributeError: 'NoneType' object has no attribute 'click'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_StatisticAnalysis\ECFlowDay.py", line 30, in test_711_ec_flow_day
+    Res_ECFlowDay.go_to_used_page(driver)
+  File "E:\Script\UI\Commons\ECSS_StatisticAnalysis\Res_ECFlowDay.py", line 31, in go_to_used_page
+    used_gprs.click_ec_flow_day_link()
+  File "E:\Script\UI\View\ECSS_StatisticAnalysis_Page\StatisticAnalysisPage.py", line 197, in click_ec_flow_day_link
+    self.oper_click(self.ec_flow_day_link_loc)
+  File "E:\Script\UI\Libraries\Page.py", line 137, in oper_click
+    raise ValueError("控件不可用或者定位失败")
+ValueError: 控件不可用或者定位失败
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft18.1')">展示图片</a>
+    <div id='div_capture_ft18.1' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='ft18.2' class='none'>
+    <td class='errorCase'><div class='testcase'>test_712_ec_flow_day_export: 统计分析-用量统计报表-集团流量趋势日报-导出</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft18.2')" >
+        错误</a>
+    <div id='div_ft18.2' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft18.2').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.登录ECportal
+2.进入集团流量趋势日报界面
+&lt;View.ECSS_StatisticAnalysis_Page.StatisticAnalysisPage.StatisticAnalysisPage object at 0x00000000163C2128&gt; 页面中未能找到 ('xpath', ".//*[text()='集团流量趋势日报']") 元素
+Traceback (most recent call last):
+  File "E:\Script\UI\Libraries\Page.py", line 135, in oper_click
+    self.find_element(*loc).click()
+AttributeError: 'NoneType' object has no attribute 'click'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_StatisticAnalysis\ECFlowDay.py", line 39, in test_712_ec_flow_day_export
+    Res_ECFlowDay.go_to_used_page(driver)
+  File "E:\Script\UI\Commons\ECSS_StatisticAnalysis\Res_ECFlowDay.py", line 31, in go_to_used_page
+    used_gprs.click_ec_flow_day_link()
+  File "E:\Script\UI\View\ECSS_StatisticAnalysis_Page\StatisticAnalysisPage.py", line 197, in click_ec_flow_day_link
+    self.oper_click(self.ec_flow_day_link_loc)
+  File "E:\Script\UI\Libraries\Page.py", line 137, in oper_click
+    raise ValueError("控件不可用或者定位失败")
+ValueError: 控件不可用或者定位失败
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft18.2')">展示图片</a>
+    <div id='div_capture_ft18.2' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr class='errorClass'>
+    <td>Module.ECSSPortal_StatisticAnalysis.ECFlowMonth.StatisticAnalysis</td>
+    <td>2</td>
+    <td>0</td>
+    <td>0</td>
+    <td>2</td>
+    <td><a href="javascript:showClassDetail('c19',2)">详细</a></td>
+    <td>&nbsp;</td>
+</tr>
+
+<tr id='ft19.1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_713_ec_flow_month: 统计分析-用量统计报表-集团流量趋势月报-查询</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft19.1')" >
+        错误</a>
+    <div id='div_ft19.1' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft19.1').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.登录ECportal
+2.进入集团流量趋势月报界面
+&lt;View.ECSS_StatisticAnalysis_Page.StatisticAnalysisPage.StatisticAnalysisPage object at 0x00000000163C55C0&gt; 页面中未能找到 ('xpath', ".//*[text()='集团流量趋势月报']") 元素
+Traceback (most recent call last):
+  File "E:\Script\UI\Libraries\Page.py", line 135, in oper_click
+    self.find_element(*loc).click()
+AttributeError: 'NoneType' object has no attribute 'click'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_StatisticAnalysis\ECFlowMonth.py", line 30, in test_713_ec_flow_month
+    Res_ECFlowMonth.go_to_used_page(driver)
+  File "E:\Script\UI\Commons\ECSS_StatisticAnalysis\Res_ECFlowMonth.py", line 33, in go_to_used_page
+    used_gprs.click_ec_flow_month_link()
+  File "E:\Script\UI\View\ECSS_StatisticAnalysis_Page\StatisticAnalysisPage.py", line 228, in click_ec_flow_month_link
+    self.oper_click(self.ec_flow_month_link_loc)
+  File "E:\Script\UI\Libraries\Page.py", line 137, in oper_click
+    raise ValueError("控件不可用或者定位失败")
+ValueError: 控件不可用或者定位失败
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft19.1')">展示图片</a>
+    <div id='div_capture_ft19.1' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='ft19.2' class='none'>
+    <td class='errorCase'><div class='testcase'>test_714_ec_flow_month_export: 统计分析-用量统计报表-集团流量趋势月报-导出</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft19.2')" >
+        错误</a>
+    <div id='div_ft19.2' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft19.2').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.登录ECportal
+2.进入集团流量趋势月报界面
+&lt;View.ECSS_StatisticAnalysis_Page.StatisticAnalysisPage.StatisticAnalysisPage object at 0x00000000163C2710&gt; 页面中未能找到 ('xpath', ".//*[text()='集团流量趋势月报']") 元素
+Traceback (most recent call last):
+  File "E:\Script\UI\Libraries\Page.py", line 135, in oper_click
+    self.find_element(*loc).click()
+AttributeError: 'NoneType' object has no attribute 'click'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_StatisticAnalysis\ECFlowMonth.py", line 39, in test_714_ec_flow_month_export
+    Res_ECFlowMonth.go_to_used_page(driver)
+  File "E:\Script\UI\Commons\ECSS_StatisticAnalysis\Res_ECFlowMonth.py", line 33, in go_to_used_page
+    used_gprs.click_ec_flow_month_link()
+  File "E:\Script\UI\View\ECSS_StatisticAnalysis_Page\StatisticAnalysisPage.py", line 228, in click_ec_flow_month_link
+    self.oper_click(self.ec_flow_month_link_loc)
+  File "E:\Script\UI\Libraries\Page.py", line 137, in oper_click
+    raise ValueError("控件不可用或者定位失败")
+ValueError: 控件不可用或者定位失败
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft19.2')">展示图片</a>
+    <div id='div_capture_ft19.2' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr class='errorClass'>
+    <td>Module.ECSSPortal_StatisticAnalysis.CardFlowDay.StatisticAnalysis</td>
+    <td>2</td>
+    <td>0</td>
+    <td>1</td>
+    <td>1</td>
+    <td><a href="javascript:showClassDetail('c20',2)">详细</a></td>
+    <td>&nbsp;</td>
+</tr>
+
+<tr id='ft20.1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_715_card_flow_day: 统计分析-用量统计报表-物联卡流量趋势日报-查询</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft20.1')" >
+        错误</a>
+    <div id='div_ft20.1' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft20.1').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.登录连接平台
+2.进入物联卡流量趋势日报界面
+3.检查点
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_StatisticAnalysis\CardFlowDay.py", line 31, in test_715_card_flow_day
+    check = Res_CardFlowDay.checkAllSteps(driver)
+  File "E:\Script\UI\Commons\ECSS_StatisticAnalysis\Res_CardFlowDay.py", line 205, in checkAllSteps
+    time2 = driver.find_element_by_xpath(".//*[@id='content']/div/div/div[3]/div/table/tbody/tr[1]/td[1]/span").text
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 385, in find_element_by_xpath
+    return self.find_element(by=By.XPATH, value=xpath)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 955, in find_element
+    'value': value})['value']
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 312, in execute
+    self.error_handler.check_response(response)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 242, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchElementException: Message: Unable to locate element: .//*[@id='content']/div/div/div[3]/div/table/tbody/tr[1]/td[1]/span
+
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft20.1')">展示图片</a>
+    <div id='div_capture_ft20.1' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='ft20.2' class='none'>
+    <td class='failCase'><div class='testcase'>test_716_card_flow_day_export: 统计分析-用量统计报表-物联卡流量趋势日报-导出</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft20.2')" >
+        失败</a>
+    <div id='div_ft20.2' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft20.2').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.登录连接平台
+2.进入物联卡流量趋势日报界面
+3.检查导出数据与界面展示数据一致性
+4.检查点
+CHECKPOINT[Failure]:统计分析-导出数据检查
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_StatisticAnalysis\CardFlowDay.py", line 42, in test_716_card_flow_day_export
+    checkResult(self, driver, True, result, "统计分析-导出数据检查")
+  File "E:\Script\UI\Libraries\UtilityFunctions.py", line 155, in checkResult
+    self.fail(message)
+AssertionError: 统计分析-导出数据检查
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft20.2')">展示图片</a>
+    <div id='div_capture_ft20.2' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr class='errorClass'>
+    <td>Module.ECSSPortal_StatisticAnalysis.CardFlowMonth.StatisticAnalysis</td>
+    <td>2</td>
+    <td>0</td>
+    <td>1</td>
+    <td>1</td>
+    <td><a href="javascript:showClassDetail('c21',2)">详细</a></td>
+    <td>&nbsp;</td>
+</tr>
+
+<tr id='ft21.1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_717_card_flow_month: 统计分析-用量统计报表-物联卡流量趋势月报-查询</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft21.1')" >
+        错误</a>
+    <div id='div_ft21.1' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft21.1').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.登录ECportal
+2.进入物联卡流量趋势月报界面
+3.检查点
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_StatisticAnalysis\CardFlowMonth.py", line 30, in test_717_card_flow_month
+    check = Res_CardFlowMonth.checkAllSteps(driver)
+  File "E:\Script\UI\Commons\ECSS_StatisticAnalysis\Res_CardFlowMonth.py", line 193, in checkAllSteps
+    time2 = driver.find_element_by_xpath("//*[@id='content']/div/div/div[3]/div/table/tbody/tr[1]/td[1]/span").text
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 385, in find_element_by_xpath
+    return self.find_element(by=By.XPATH, value=xpath)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 955, in find_element
+    'value': value})['value']
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 312, in execute
+    self.error_handler.check_response(response)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 242, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchElementException: Message: Unable to locate element: //*[@id='content']/div/div/div[3]/div/table/tbody/tr[1]/td[1]/span
+
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft21.1')">展示图片</a>
+    <div id='div_capture_ft21.1' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='ft21.2' class='none'>
+    <td class='failCase'><div class='testcase'>test_718_card_flow_month_export: 统计分析-用量统计报表-物联卡流量趋势月报-导出</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft21.2')" >
+        失败</a>
+    <div id='div_ft21.2' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft21.2').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.登录ECportal
+2.进入物联卡流量趋势月报界面
+3.检查导出数据与界面展示数据一致性
+4.检查点
+CHECKPOINT[Failure]:统计分析-导出数据检查
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_StatisticAnalysis\CardFlowMonth.py", line 41, in test_718_card_flow_month_export
+    checkResult(self, driver, True, result, "统计分析-导出数据检查")
+  File "E:\Script\UI\Libraries\UtilityFunctions.py", line 155, in checkResult
+    self.fail(message)
+AssertionError: 统计分析-导出数据检查
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft21.2')">展示图片</a>
+    <div id='div_capture_ft21.2' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr class='errorClass'>
+    <td>Module.ECSSPortal_StatisticAnalysis.ThisMonthUsedGPRS_GroupUser.StatisticAnalysis</td>
+    <td>2</td>
+    <td>0</td>
+    <td>1</td>
+    <td>1</td>
+    <td><a href="javascript:showClassDetail('c22',2)">详细</a></td>
+    <td>&nbsp;</td>
+</tr>
+
+<tr id='ft22.1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_701_this_month_used_gprs_group: 统计分析-用量统计报表-本月用量统计报表-查询(群组)</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft22.1')" >
+        错误</a>
+    <div id='div_ft22.1' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft22.1').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.登录ECportal
+2.进入本月用量统计报表界面
+&lt;View.ECSS_StatisticAnalysis_Page.StatisticAnalysisPage.StatisticAnalysisPage object at 0x000000001638B9B0&gt; 页面中未能找到 ('xpath', ".//*[text()='统计分析']") 元素
+Traceback (most recent call last):
+  File "E:\Script\UI\Libraries\Page.py", line 135, in oper_click
+    self.find_element(*loc).click()
+AttributeError: 'NoneType' object has no attribute 'click'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_StatisticAnalysis\ThisMonthUsedGPRS_GroupUser.py", line 29, in test_701_this_month_used_gprs_group
+    Res_ThisMonthUsedGPRS.go_to_this_month_used_page(driver)
+  File "E:\Script\UI\Commons\ECSS_StatisticAnalysis\Res_ThisMonthUsedGPRS.py", line 27, in go_to_this_month_used_page
+    this_month_used_gprs.click_statistic_analysis()
+  File "E:\Script\UI\View\ECSS_StatisticAnalysis_Page\StatisticAnalysisPage.py", line 121, in click_statistic_analysis
+    self.oper_click(self.statistic_analysis_menu_loc)
+  File "E:\Script\UI\Libraries\Page.py", line 137, in oper_click
+    raise ValueError("控件不可用或者定位失败")
+ValueError: 控件不可用或者定位失败
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft22.1')">展示图片</a>
+    <div id='div_capture_ft22.1' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='ft22.2' class='none'>
+    <td class='failCase'><div class='testcase'>test_702_this_month_used_gprs_export_group: 统计分析-用量统计报表-本月用量统计报表-导出(群组)</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft22.2')" >
+        失败</a>
+    <div id='div_ft22.2' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft22.2').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.登录ECportal
+2.进入本月用量统计报表界面
+3.检查导出数据与界面展示数据一致性
+4.检查点
+CHECKPOINT[Failure]:统计分析-本月用量统计报表-导出数据检查
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_StatisticAnalysis\ThisMonthUsedGPRS_GroupUser.py", line 42, in test_702_this_month_used_gprs_export_group
+    checkResult(self, driver, True, result, "统计分析-本月用量统计报表-导出数据检查")
+  File "E:\Script\UI\Libraries\UtilityFunctions.py", line 155, in checkResult
+    self.fail(message)
+AssertionError: 统计分析-本月用量统计报表-导出数据检查
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft22.2')">展示图片</a>
+    <div id='div_capture_ft22.2' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr class='errorClass'>
+    <td>Module.ECSSPortal_StatisticAnalysis.CurrentCardStatus_GroupUser.StatisticAnalysis</td>
+    <td>2</td>
+    <td>1</td>
+    <td>0</td>
+    <td>1</td>
+    <td><a href="javascript:showClassDetail('c23',2)">详细</a></td>
+    <td>&nbsp;</td>
+</tr>
+
+<tr id='ft23.1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_703_current_card_status_group: 统计分析-当前卡状态报表-查询(群组)</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft23.1')" >
+        错误</a>
+    <div id='div_ft23.1' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft23.1').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.登录ECPortal
+2.进入当前卡状态报表界面
+3.检查点
+[Pass]时间格式正确
+[Pass]物联卡号格式正确
+[Pass]iccid格式正确
+[Pass]物联卡号状态格式正确
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_StatisticAnalysis\CurrentCardStatus_GroupUser.py", line 38, in test_703_current_card_status_group
+    check = Res_CurrentCardStatus.checkAllSteps(driver)
+  File "E:\Script\UI\Commons\ECSS_StatisticAnalysis\Res_CurrentCardStatus.py", line 135, in checkAllSteps
+    currentCardStatus.click_query_button()
+  File "E:\Script\UI\View\ECSS_StatisticAnalysis_Page\StatisticAnalysisPage.py", line 125, in click_query_button
+    self.oper_click(self.query_button_loc)
+  File "E:\Script\UI\Libraries\Page.py", line 135, in oper_click
+    self.find_element(*loc).click()
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webelement.py", line 80, in click
+    self._execute(Command.CLICK_ELEMENT)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webelement.py", line 628, in _execute
+    return self._parent.execute(command, params)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 312, in execute
+    self.error_handler.check_response(response)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 242, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.ElementClickInterceptedException: Message: Element &lt;button class="btn btn-primary col-xs-4 ng-binding"&gt; is not clickable at point (1281.75,197) because another element &lt;h4 class="modal-title ng-binding"&gt; obscures it
+
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft23.1')">展示图片</a>
+    <div id='div_capture_ft23.1' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='pt23.2' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_704_current_card_status_export_group: 统计分析-当前卡状态报表-导出(群组)</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt23.2')" >
+        通过</a>
+    <div id='div_pt23.2' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_pt23.2').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.登录ECPortal
+2.进入当前卡状态报表界面
+3.检查点
+tmStatusMonthExportService_ecqz_851szh_20181206181614_570608.xlsx
+rows: 
+15
+row title
+5
+CHECKPOINT[PASS]：统计分析-UAT测试数据检查
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_pt23.2')">展示图片</a>
+    <div id='div_capture_pt23.2' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr class='failClass'>
+    <td>Module.ECSSPortal_StatisticAnalysis.CardCount_GroupUser.StatisticAnalysis</td>
+    <td>2</td>
+    <td>1</td>
+    <td>1</td>
+    <td>0</td>
+    <td><a href="javascript:showClassDetail('c24',2)">详细</a></td>
+    <td>&nbsp;</td>
+</tr>
+
+<tr id='ft24.1' class='none'>
+    <td class='failCase'><div class='testcase'>test_705_card_count_group: 统计分析-用量统计报表-物联卡数量统计报表-查询(群组)</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft24.1')" >
+        失败</a>
+    <div id='div_ft24.1' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft24.1').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.登录ECPortal
+2.进入物联卡数量统计报表界面
+3.检查点
+originalValue2018-11
+[Pass]时间格式正确
+[Fail]物联卡总量格式不正确
+CHECKPOINT[Failure]:统计分析-物联卡数量统计报表成功
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_StatisticAnalysis\CardCount_GroupUser.py", line 31, in test_705_card_count_group
+    checkResult(self, driver, True, check, "统计分析-物联卡数量统计报表成功")
+  File "E:\Script\UI\Libraries\UtilityFunctions.py", line 155, in checkResult
+    self.fail(message)
+AssertionError: 统计分析-物联卡数量统计报表成功
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft24.1')">展示图片</a>
+    <div id='div_capture_ft24.1' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='pt24.2' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_706_card_count_export_group: 统计分析-用量统计报表-物联卡数量统计报表-批量导出(群组)</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt24.2')" >
+        通过</a>
+    <div id='div_pt24.2' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_pt24.2').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.登录ECPortal
+2.进入物联卡数量统计报表界面
+3.检查点
+userCntMonthExportService_ecqz_851szh_20181206181837_843111.xlsx
+rows: 
+5
+row title
+3
+CHECKPOINT[PASS]：统计分析-物联卡数量统计报表-UAT测试数据检查
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_pt24.2')">展示图片</a>
+    <div id='div_capture_pt24.2' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr class='errorClass'>
+    <td>Module.ECSSPortal_StatisticAnalysis.UsedGPRS_GroupUser.StatisticAnalysis</td>
+    <td>2</td>
+    <td>1</td>
+    <td>0</td>
+    <td>1</td>
+    <td><a href="javascript:showClassDetail('c25',2)">详细</a></td>
+    <td>&nbsp;</td>
+</tr>
+
+<tr id='ft25.1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_707_used_gprs_group: 统计分析-用量统计报表-流量使用统计报表-查询(群组)</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft25.1')" >
+        错误</a>
+    <div id='div_ft25.1' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft25.1').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.登录ECportal
+2.进入流量使用统计报表界面
+3.检查点
+[Pass]时间格式正确
+[Pass]物联卡总量格式正确
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_StatisticAnalysis\UsedGPRS_GroupUser.py", line 35, in test_707_used_gprs_group
+    check = Res_UsedGPRS.check_all_steps(driver)
+  File "E:\Script\UI\Commons\ECSS_StatisticAnalysis\Res_UsedGPRS.py", line 427, in check_all_steps
+    msisdn = driver.find_element_by_xpath("//*[@id='content']/div/div[3]/table[2]/tbody/tr[1]/td[3]").text
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 385, in find_element_by_xpath
+    return self.find_element(by=By.XPATH, value=xpath)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 955, in find_element
+    'value': value})['value']
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 312, in execute
+    self.error_handler.check_response(response)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 242, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchElementException: Message: Unable to locate element: //*[@id='content']/div/div[3]/table[2]/tbody/tr[1]/td[3]
+
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft25.1')">展示图片</a>
+    <div id='div_capture_ft25.1' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='pt25.2' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_708_used_gprs_export_group: 统计分析-用量统计报表-流量使用统计报表-导出（群组）</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt25.2')" >
+        通过</a>
+    <div id='div_pt25.2' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_pt25.2').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.登录ECportal
+2.进入流量使用统计报表界面
+3.检查导出数据与界面展示数据一致性
+33333333333333333333333333
+subsFlowMonthExportService_ecqz_851szh_20181206182106_595826.xlsx
+rows: 
+5
+row title
+7
+4.检查点
+CHECKPOINT[PASS]：统计分析-流量使用统计报表-导出数据检查
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_pt25.2')">展示图片</a>
+    <div id='div_capture_pt25.2' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr class='errorClass'>
+    <td>Module.ECSSPortal_StatisticAnalysis.UsedSMS_GroupUser.StatisticAnalysis</td>
+    <td>2</td>
+    <td>0</td>
+    <td>1</td>
+    <td>1</td>
+    <td><a href="javascript:showClassDetail('c26',2)">详细</a></td>
+    <td>&nbsp;</td>
+</tr>
+
+<tr id='ft26.1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_709_used_sms_group: 统计分析-用量统计报表-短信使用统计报表-查询(群组)</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft26.1')" >
+        错误</a>
+    <div id='div_ft26.1' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft26.1').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.登录ECportal
+2.进入短信使用统计报表界面
+3.检查点
+['0', '0', '1', '0']
+['0', '0', '1', '0']
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_StatisticAnalysis\UsedSMS_GroupUser.py", line 31, in test_709_used_sms_group
+    check = Res_UsedSMS.checkAllSteps(driver)
+  File "E:\Script\UI\Commons\ECSS_StatisticAnalysis\Res_UsedSMS.py", line 225, in checkAllSteps
+    time2 = driver.find_element_by_xpath("//*[@id='content']/div/div[3]/table[2]/tbody/tr[1]/td[1]").text
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 385, in find_element_by_xpath
+    return self.find_element(by=By.XPATH, value=xpath)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 955, in find_element
+    'value': value})['value']
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 312, in execute
+    self.error_handler.check_response(response)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 242, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchElementException: Message: Unable to locate element: //*[@id='content']/div/div[3]/table[2]/tbody/tr[1]/td[1]
+
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft26.1')">展示图片</a>
+    <div id='div_capture_ft26.1' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='ft26.2' class='none'>
+    <td class='failCase'><div class='testcase'>test_710_used_sms_export_group: 统计分析-用量统计报表-已用短信统计-批量导出(群组)</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft26.2')" >
+        失败</a>
+    <div id='div_ft26.2' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft26.2').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.登录ECportal
+2.进入短信使用统计报表界面
+3.检查导出数据与界面展示数据一致性
+4.检查点
+CHECKPOINT[Failure]:统计分析-短信使用统计报表-导出数据检查
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_StatisticAnalysis\UsedSMS_GroupUser.py", line 42, in test_710_used_sms_export_group
+    checkResult(self, driver, True, result, "统计分析-短信使用统计报表-导出数据检查")
+  File "E:\Script\UI\Libraries\UtilityFunctions.py", line 155, in checkResult
+    self.fail(message)
+AssertionError: 统计分析-短信使用统计报表-导出数据检查
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft26.2')">展示图片</a>
+    <div id='div_capture_ft26.2' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr class='errorClass'>
+    <td>Module.ECSSPortal_StatisticAnalysis.ECFlowDay_GroupUser.StatisticAnalysis</td>
+    <td>2</td>
+    <td>0</td>
+    <td>1</td>
+    <td>1</td>
+    <td><a href="javascript:showClassDetail('c27',2)">详细</a></td>
+    <td>&nbsp;</td>
+</tr>
+
+<tr id='ft27.1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_711_ec_flow_day_group: 统计分析-用量统计报表-群组流量趋势日报-查询</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft27.1')" >
+        错误</a>
+    <div id='div_ft27.1' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft27.1').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.登录ECportal
+2.进入群组流量趋势日报界面
+3.检查点
+originalValue
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_StatisticAnalysis\ECFlowDay_GroupUser.py", line 33, in test_711_ec_flow_day_group
+    check = Res_ECFlowDay.checkAllSteps(driver)
+  File "E:\Script\UI\Commons\ECSS_StatisticAnalysis\Res_ECFlowDay.py", line 238, in checkAllSteps
+    time2 = driver.find_element_by_xpath("//*[@id='content']/div/div/div[3]/table[2]/tbody/tr[1]/td[1]").text
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 385, in find_element_by_xpath
+    return self.find_element(by=By.XPATH, value=xpath)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 955, in find_element
+    'value': value})['value']
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 312, in execute
+    self.error_handler.check_response(response)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 242, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchElementException: Message: Unable to locate element: //*[@id='content']/div/div/div[3]/table[2]/tbody/tr[1]/td[1]
+
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft27.1')">展示图片</a>
+    <div id='div_capture_ft27.1' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='ft27.2' class='none'>
+    <td class='failCase'><div class='testcase'>test_712_ec_flow_day_export_group: 统计分析-用量统计报表-群组流量趋势日报-导出</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft27.2')" >
+        失败</a>
+    <div id='div_ft27.2' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft27.2').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.登录ECportal
+2.进入群组流量趋势日报界面
+3.检查导出数据与界面展示数据一致性
+4.检查点
+CHECKPOINT[Failure]:统计分析-集团流量趋势日报-导出数据检查
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_StatisticAnalysis\ECFlowDay_GroupUser.py", line 44, in test_712_ec_flow_day_export_group
+    checkResult(self, driver, True, result, "统计分析-集团流量趋势日报-导出数据检查")
+  File "E:\Script\UI\Libraries\UtilityFunctions.py", line 155, in checkResult
+    self.fail(message)
+AssertionError: 统计分析-集团流量趋势日报-导出数据检查
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft27.2')">展示图片</a>
+    <div id='div_capture_ft27.2' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr class='errorClass'>
+    <td>Module.ECSSPortal_StatisticAnalysis.ECFlowMonth_GroupUser.StatisticAnalysis</td>
+    <td>2</td>
+    <td>0</td>
+    <td>1</td>
+    <td>1</td>
+    <td><a href="javascript:showClassDetail('c28',2)">详细</a></td>
+    <td>&nbsp;</td>
+</tr>
+
+<tr id='ft28.1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_713_ec_flow_month_group: 统计分析-用量统计报表-群组流量趋势月报-查询</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft28.1')" >
+        错误</a>
+    <div id='div_ft28.1' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft28.1').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.登录ECportal
+2.进入群组流量趋势月报界面
+3.检查点
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_StatisticAnalysis\ECFlowMonth_GroupUser.py", line 39, in test_713_ec_flow_month_group
+    check = Res_ECFlowMonth.checkAllSteps(driver)
+  File "E:\Script\UI\Commons\ECSS_StatisticAnalysis\Res_ECFlowMonth.py", line 220, in checkAllSteps
+    time2 = driver.find_element_by_xpath("//*[@id='content']/div/div/div[2]/table/tbody/tr[1]/td[1]").text
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 385, in find_element_by_xpath
+    return self.find_element(by=By.XPATH, value=xpath)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 955, in find_element
+    'value': value})['value']
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 312, in execute
+    self.error_handler.check_response(response)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 242, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchElementException: Message: Unable to locate element: //*[@id='content']/div/div/div[2]/table/tbody/tr[1]/td[1]
+
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft28.1')">展示图片</a>
+    <div id='div_capture_ft28.1' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='ft28.2' class='none'>
+    <td class='failCase'><div class='testcase'>test_714_ec_flow_month_export_group: 统计分析-用量统计报表-群组流量趋势月报-导出</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft28.2')" >
+        失败</a>
+    <div id='div_ft28.2' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft28.2').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.登录ECportal
+2.进入群组流量趋势月报界面
+3.检查导出数据与界面展示数据一致性
+4.检查点
+CHECKPOINT[Failure]:统计分析-群组流量趋势月报-导出数据检查
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_StatisticAnalysis\ECFlowMonth_GroupUser.py", line 50, in test_714_ec_flow_month_export_group
+    checkResult(self, driver, True, result, "统计分析-群组流量趋势月报-导出数据检查")
+  File "E:\Script\UI\Libraries\UtilityFunctions.py", line 155, in checkResult
+    self.fail(message)
+AssertionError: 统计分析-群组流量趋势月报-导出数据检查
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft28.2')">展示图片</a>
+    <div id='div_capture_ft28.2' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr class='errorClass'>
+    <td>Module.ECSSPortal_StatisticAnalysis.CardFlowDay_GroupUser.StatisticAnalysis</td>
+    <td>2</td>
+    <td>0</td>
+    <td>1</td>
+    <td>1</td>
+    <td><a href="javascript:showClassDetail('c29',2)">详细</a></td>
+    <td>&nbsp;</td>
+</tr>
+
+<tr id='ft29.1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_715_card_flow_day_group: 统计分析-用量统计报表-物联卡流量趋势日报-查询(群组)</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft29.1')" >
+        错误</a>
+    <div id='div_ft29.1' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft29.1').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.登录ECportal
+2.进入物联卡流量趋势日报界面
+3.检查点
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_StatisticAnalysis\CardFlowDay_GroupUser.py", line 33, in test_715_card_flow_day_group
+    check = Res_CardFlowDay.checkAllSteps(driver)
+  File "E:\Script\UI\Commons\ECSS_StatisticAnalysis\Res_CardFlowDay.py", line 205, in checkAllSteps
+    time2 = driver.find_element_by_xpath(".//*[@id='content']/div/div/div[3]/div/table/tbody/tr[1]/td[1]/span").text
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 385, in find_element_by_xpath
+    return self.find_element(by=By.XPATH, value=xpath)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 955, in find_element
+    'value': value})['value']
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 312, in execute
+    self.error_handler.check_response(response)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 242, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchElementException: Message: Unable to locate element: .//*[@id='content']/div/div/div[3]/div/table/tbody/tr[1]/td[1]/span
+
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft29.1')">展示图片</a>
+    <div id='div_capture_ft29.1' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='ft29.2' class='none'>
+    <td class='failCase'><div class='testcase'>test_716_card_flow_day_export_group: 统计分析-用量统计报表-物联卡流量趋势日报-导出(群组)</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft29.2')" >
+        失败</a>
+    <div id='div_ft29.2' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft29.2').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.登录ECportal
+2.进入物联卡流量趋势日报界面
+3.检查导出数据与界面展示数据一致性
+4.检查点
+CHECKPOINT[Failure]:统计分析-导出数据检查
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_StatisticAnalysis\CardFlowDay_GroupUser.py", line 44, in test_716_card_flow_day_export_group
+    checkResult(self, driver, True, result, "统计分析-导出数据检查")
+  File "E:\Script\UI\Libraries\UtilityFunctions.py", line 155, in checkResult
+    self.fail(message)
+AssertionError: 统计分析-导出数据检查
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft29.2')">展示图片</a>
+    <div id='div_capture_ft29.2' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr class='errorClass'>
+    <td>Module.ECSSPortal_StatisticAnalysis.CardFlowMonth_GroupUser.StatisticAnalysis</td>
+    <td>2</td>
+    <td>0</td>
+    <td>1</td>
+    <td>1</td>
+    <td><a href="javascript:showClassDetail('c30',2)">详细</a></td>
+    <td>&nbsp;</td>
+</tr>
+
+<tr id='ft30.1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_717_card_flow_month_group: 统计分析-用量统计报表-物联卡流量趋势月报-查询(群组)</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft30.1')" >
+        错误</a>
+    <div id='div_ft30.1' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft30.1').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.登录ECportal
+2.进入物联卡流量趋势月报界面
+3.检查点
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_StatisticAnalysis\CardFlowMonth_GroupUser.py", line 33, in test_717_card_flow_month_group
+    check = Res_CardFlowMonth.checkAllSteps(driver)
+  File "E:\Script\UI\Commons\ECSS_StatisticAnalysis\Res_CardFlowMonth.py", line 193, in checkAllSteps
+    time2 = driver.find_element_by_xpath("//*[@id='content']/div/div/div[3]/div/table/tbody/tr[1]/td[1]/span").text
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 385, in find_element_by_xpath
+    return self.find_element(by=By.XPATH, value=xpath)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 955, in find_element
+    'value': value})['value']
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\webdriver.py", line 312, in execute
+    self.error_handler.check_response(response)
+  File "C:\Python36\lib\site-packages\selenium\webdriver\remote\errorhandler.py", line 242, in check_response
+    raise exception_class(message, screen, stacktrace)
+selenium.common.exceptions.NoSuchElementException: Message: Unable to locate element: //*[@id='content']/div/div/div[3]/div/table/tbody/tr[1]/td[1]/span
+
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft30.1')">展示图片</a>
+    <div id='div_capture_ft30.1' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='ft30.2' class='none'>
+    <td class='failCase'><div class='testcase'>test_718_card_flow_month_export_group: 统计分析-用量统计报表-物联卡流量趋势月报-导出(群组)</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft30.2')" >
+        失败</a>
+    <div id='div_ft30.2' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft30.2').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.登录ECportal
+2.进入物联卡流量趋势月报界面
+3.检查导出数据与界面展示数据一致性
+4.检查点
+CHECKPOINT[Failure]:统计分析-导出数据检查
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_StatisticAnalysis\CardFlowMonth_GroupUser.py", line 44, in test_718_card_flow_month_export_group
+    checkResult(self, driver, True, result, "统计分析-导出数据检查")
+  File "E:\Script\UI\Libraries\UtilityFunctions.py", line 155, in checkResult
+    self.fail(message)
+AssertionError: 统计分析-导出数据检查
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft30.2')">展示图片</a>
+    <div id='div_capture_ft30.2' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr class='failClass'>
+    <td>Module.ECSSPortal_APIIntegration.APIIntegrationIntroduce.APIIntegration</td>
+    <td>1</td>
+    <td>0</td>
+    <td>1</td>
+    <td>0</td>
+    <td><a href="javascript:showClassDetail('c31',1)">详细</a></td>
+    <td>&nbsp;</td>
+</tr>
+
+<tr id='ft31.1' class='none'>
+    <td class='failCase'><div class='testcase'>test_81_api_introduce</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft31.1')" >
+        失败</a>
+    <div id='div_ft31.1' class="popup_window">
+        <div style='text-align: right; color:red;cursor:pointer'>
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft31.1').style.display = 'none' " >
+           [x]</a>
+        </div>
+        <pre>
+        
+1.全网运营商登录ECportal
+API介绍跳转
+http://192.168.156.217:2666/cmp/#!/
+&lt;View.ECSSPortal_APIIntegration_Page.APIIntegrationPage.APIIntegrationPage object at 0x000000001643CE10&gt; 页面中未能找到 ('xpath', '/html/body/div[1]/ul/li[2]/a') 元素
+&lt;View.ECSSPortal_APIIntegration_Page.APIIntegrationPage.APIIntegrationPage object at 0x000000001643CE10&gt; page does not have "('xpath', '/html/body/div[1]/ul/li[2]/a')" locator
+CHECKPOINT[Failure]:API介绍跳转
+Traceback (most recent call last):
+  File "E:\Script\UI\Module\ECSSPortal_APIIntegration\APIIntegrationIntroduce.py", line 79, in test_81_api_introduce
+    checkResult(self, driver, True, flag, 'API介绍跳转')
+  File "E:\Script\UI\Libraries\UtilityFunctions.py", line 155, in checkResult
+    self.fail(message)
+AssertionError: API介绍跳转
+
+
+        </pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+    <!--yinhong update on 2016.11.29 begin-->
+    <td align='center'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showHTML('div_capture_ft31.1')">展示图片</a>
+    <div id='div_capture_ft31.1' class="popup_window_img" style="display:none" >
+        
+    </div>
+    </td>
+    <!--yinhong update on 2016.11.29 end-->
+</tr>
+
+<tr id='total_row'>
+    <td>总计</td>
+    <td>85</td>
+    <td>12</td>
+    <td>15</td>
+    <td>58</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+</tr>
+</table>
+
+<div id='ending'>&nbsp;</div>
+
+</body>
+</html>
